@@ -1,0 +1,9 @@
+/target/
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# PDF files
+*.pdf
