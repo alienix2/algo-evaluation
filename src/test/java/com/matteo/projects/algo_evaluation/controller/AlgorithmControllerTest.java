@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -41,5 +42,25 @@ public class AlgorithmControllerTest {
 		when(algorithmRepository.findAll()).thenReturn(Arrays.asList(new Algorithm("1", "BubbleSort")));
 		algorithmController.allAlgorithms();
 		verify(algorithmView).showAllAlgorithms(Arrays.asList(new Algorithm("1", "BubbleSort")));
+	}
+
+	@Test
+	public void testNewAlgorithmDoesNotAlreadyExist() {
+		when(algorithmRepository.findById("1")).thenReturn(null);
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		algorithmController.newAlgorithm(algorithm);
+		InOrder inOrder = inOrder(algorithmRepository, algorithmView);
+		inOrder.verify(algorithmRepository).save(algorithm);
+		inOrder.verify(algorithmView).algorithmAdded(algorithm);
+	}
+
+	@Test
+	public void testNewAlgorithmAlreadyExist() {
+		Algorithm existing = new Algorithm("1", "BubbleSort");
+		Algorithm toAdd = new Algorithm("1", "AnotherSort");
+		when(algorithmRepository.findById("1")).thenReturn(existing);
+		algorithmController.newAlgorithm(toAdd);
+		verify(algorithmView).showError("Already existing algorithm with id 1", existing);
+		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
 	}
 }

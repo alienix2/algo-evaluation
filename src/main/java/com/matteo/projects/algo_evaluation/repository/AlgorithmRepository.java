@@ -8,4 +8,8 @@ public interface AlgorithmRepository {
 
 	List<Algorithm> findAll();
 
+	Algorithm findById(String string);
+
+	void save(Algorithm algorithm);
+
 }

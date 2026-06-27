@@ -8,4 +8,8 @@ public interface AlgorithmView {
 
 	void showAllAlgorithms(List<Algorithm> asList);
 
+	void algorithmAdded(Algorithm algorithm);
+	
+	void showError(String string, Algorithm existing);
+
 }
