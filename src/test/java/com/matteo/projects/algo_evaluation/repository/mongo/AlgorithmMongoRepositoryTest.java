@@ -83,6 +83,13 @@ public class AlgorithmMongoRepositoryTest {
 		addTestAlgorithmToDatabase("2", "test2");
 		assertThat(algorithmRepository.findById("2")).isEqualTo(new Algorithm("2" + "", "test2"));
 	}
+	
+	@Test
+	public void testSaveAlgorithm() {
+		Algorithm algorithm = new Algorithm("1", "test1");
+		algorithmRepository.save(algorithm);
+		assertThat(algorithmCollection.find(new Document("_id", "1")).first()).isNotNull();
+	}
 
 	private void addTestAlgorithmToDatabase(String id, String name) {
 		Document doc = new Document("_id", id).append("name", name);

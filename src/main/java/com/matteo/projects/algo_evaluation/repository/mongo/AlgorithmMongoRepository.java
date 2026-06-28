@@ -40,6 +40,9 @@ public class AlgorithmMongoRepository implements AlgorithmRepository {
 
 	@Override
 	public void save(Algorithm algorithm) {
+		Document doc = new Document("_id", algorithm.getId())
+				.append("name", algorithm.getName());
+		studentCollection.insertOne(doc);
 	}
 
 	@Override
