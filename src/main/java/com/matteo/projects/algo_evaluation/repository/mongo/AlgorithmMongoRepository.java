@@ -16,23 +16,23 @@ public class AlgorithmMongoRepository implements AlgorithmRepository {
 
 	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String ALGORITHM_COLLECTION_NAME = "algorithms";
-	private MongoCollection<Document> studentCollection;
+	private MongoCollection<Document> algorithmCollection;
 
 	public AlgorithmMongoRepository(MongoClient mongoClient) {
-		studentCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(ALGORITHM_COLLECTION_NAME);
+		algorithmCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(ALGORITHM_COLLECTION_NAME);
 	}
 
 	@Override
 	public List<Algorithm> findAll() {
 		return StreamSupport.
-				stream(studentCollection.find().spliterator(), false)
+				stream(algorithmCollection.find().spliterator(), false)
 				.map(doc -> new Algorithm(doc.getString("_id"), doc.getString("name")))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Algorithm findById(String string) {
-		return StreamSupport.stream(studentCollection.find(new Document("_id", string)).spliterator(), false)
+		return StreamSupport.stream(algorithmCollection.find(new Document("_id", string)).spliterator(), false)
 				.map(doc -> new Algorithm(doc.getString("_id"), doc.getString("name")))
 				.findFirst()
 				.orElse(null);
@@ -42,12 +42,12 @@ public class AlgorithmMongoRepository implements AlgorithmRepository {
 	public void save(Algorithm algorithm) {
 		Document doc = new Document("_id", algorithm.getId())
 				.append("name", algorithm.getName());
-		studentCollection.insertOne(doc);
+		algorithmCollection.insertOne(doc);
 	}
 
 	@Override
 	public void delete(Algorithm algo) {
-		studentCollection.deleteOne(new Document("_id", algo.getId()));
+		algorithmCollection.deleteOne(new Document("_id", algo.getId()));
 	}
 
 }
