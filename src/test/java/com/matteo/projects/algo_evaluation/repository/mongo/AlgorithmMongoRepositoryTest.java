@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.bson.Document;
 
 import com.mongodb.ServerAddress;
+import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -46,10 +47,10 @@ public class AlgorithmMongoRepositoryTest {
 	@Before
 	public void setup() {
 		mongoClient = new MongoClient(new ServerAddress(serverAddress));
-		algorithmRepository = new AlgorithmMongoRepository(mongoClient);
 		MongoDatabase database = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME);
-		// make sure we always start with a clean database
-		database.drop();
+		// Clear the database before each test
+	    database.drop();
+		algorithmRepository = new AlgorithmMongoRepository(mongoClient);
 		algorithmCollection = database.getCollection(ALGORITHM_COLLECTION_NAME);
 	}
 	
@@ -58,4 +59,25 @@ public class AlgorithmMongoRepositoryTest {
 		mongoClient.close();
 	}
 
+	@Test
+	public void testFindAllDatabaseIsEmpty() {
+		assertThat(algorithmRepository.findAll()).isEmpty();
+	}
+	
+	@Test
+	public void testFindAllDatabaseIsNotEmpty() {
+		addTestAlgorithmToDatabase("1", "test1");
+		addTestAlgorithmToDatabase("2", "test2");
+		assertThat(algorithmRepository.findAll())
+			.containsExactly(
+				new Algorithm("1", "test1"),
+				new Algorithm("2", "test2"));
+	}
+	
+	private void addTestAlgorithmToDatabase(String id, String name) {
+		Document doc = new Document("_id", id)
+				.append("name", name);
+		algorithmCollection.insertOne(doc);
+	}
+	
 }

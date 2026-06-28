@@ -94,6 +94,8 @@
 								<excludes>
 									<exclude>
 										com/matteo/projects/algo_evaluation/model/*</exclude>
+									<exclude>
+										com/matteo/projects/algo_evaluation/repository/mongo/*</exclude>
 								</excludes>
 								<rules>
 									<rule>
