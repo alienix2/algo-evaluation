@@ -47,6 +47,7 @@ public class AlgorithmMongoRepository implements AlgorithmRepository {
 
 	@Override
 	public void delete(Algorithm algo) {
+		studentCollection.deleteOne(new Document("_id", algo.getId()));
 	}
 
 }
