@@ -38,22 +38,22 @@ public class AlgorithmMongoRepositoryTest {
 		mongoServer = new MongoServer(new MemoryBackend());
 		serverAddress = mongoServer.bind();
 	}
-	
+
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		mongoServer.shutdown();
 	}
-	
+
 	@Before
 	public void setup() {
 		mongoClient = new MongoClient(new ServerAddress(serverAddress));
 		MongoDatabase database = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME);
 		// Clear the database before each test
-	    database.drop();
+		database.drop();
 		algorithmRepository = new AlgorithmMongoRepository(mongoClient);
 		algorithmCollection = database.getCollection(ALGORITHM_COLLECTION_NAME);
 	}
-	
+
 	@After
 	public void tearDown() {
 		mongoClient.close();
@@ -63,21 +63,30 @@ public class AlgorithmMongoRepositoryTest {
 	public void testFindAllDatabaseIsEmpty() {
 		assertThat(algorithmRepository.findAll()).isEmpty();
 	}
-	
+
 	@Test
 	public void testFindAllDatabaseIsNotEmpty() {
 		addTestAlgorithmToDatabase("1", "test1");
 		addTestAlgorithmToDatabase("2", "test2");
-		assertThat(algorithmRepository.findAll())
-			.containsExactly(
-				new Algorithm("1", "test1"),
+		assertThat(algorithmRepository.findAll()).containsExactly(new Algorithm("1", "test1"),
 				new Algorithm("2", "test2"));
 	}
-	
+
+	@Test
+	public void testFindByIdNotFound() {
+		assertThat(algorithmRepository.findById("nonexistent")).isNull();
+	}
+
+	@Test
+	public void testFindByIdFound() {
+		addTestAlgorithmToDatabase("1", "test1");
+		addTestAlgorithmToDatabase("2", "test2");
+		assertThat(algorithmRepository.findById("2")).isEqualTo(new Algorithm("2" + "", "test2"));
+	}
+
 	private void addTestAlgorithmToDatabase(String id, String name) {
-		Document doc = new Document("_id", id)
-				.append("name", name);
+		Document doc = new Document("_id", id).append("name", name);
 		algorithmCollection.insertOne(doc);
 	}
-	
+
 }

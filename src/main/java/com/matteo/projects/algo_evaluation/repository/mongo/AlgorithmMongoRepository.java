@@ -32,7 +32,10 @@ public class AlgorithmMongoRepository implements AlgorithmRepository {
 
 	@Override
 	public Algorithm findById(String string) {
-		return null;
+		return StreamSupport.stream(studentCollection.find(new Document("_id", string)).spliterator(), false)
+				.map(doc -> new Algorithm(doc.getString("_id"), doc.getString("name")))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
