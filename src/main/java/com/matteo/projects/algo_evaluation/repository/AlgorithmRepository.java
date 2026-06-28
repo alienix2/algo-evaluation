@@ -12,4 +12,6 @@ public interface AlgorithmRepository {
 
 	void save(Algorithm algorithm);
 
+	void delete(Algorithm algo);
+
 }

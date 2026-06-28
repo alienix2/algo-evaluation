@@ -12,4 +12,6 @@ public interface AlgorithmView {
 	
 	void showError(String string, Algorithm existing);
 
+	void algorithmDeleted(Algorithm algo);
+
 }

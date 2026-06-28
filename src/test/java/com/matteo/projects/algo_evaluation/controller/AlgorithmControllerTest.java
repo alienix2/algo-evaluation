@@ -63,4 +63,23 @@ public class AlgorithmControllerTest {
 		verify(algorithmView).showError("Already existing algorithm with id 1", existing);
 		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
 	}
+	
+	@Test
+	public void testDeleteAlgorithmDoesNotAlreadyExist() {
+		Algorithm algo = new Algorithm("1", "BubbleSort");
+		when(algorithmRepository.findById("1")).thenReturn(null);
+		algorithmController.deleteAlgorithm(algo);
+		verify(algorithmView).showError("No existing algorithm with id 1", algo);
+		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
+	}
+	
+	@Test
+	public void testDeleteAlgorithmAlreadyExist() {
+		Algorithm algo = new Algorithm("1", "BubbleSort");
+		when(algorithmRepository.findById("1")).thenReturn(algo);
+		algorithmController.deleteAlgorithm(algo);
+		InOrder inOrder = inOrder(algorithmRepository, algorithmView);
+		inOrder.verify(algorithmRepository).delete(algo);
+		inOrder.verify(algorithmView).algorithmDeleted(algo);
+	}
 }

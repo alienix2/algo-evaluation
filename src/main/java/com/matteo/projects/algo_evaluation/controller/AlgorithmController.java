@@ -28,4 +28,15 @@ public class AlgorithmController {
 		algorithmRepository.save(algorithm);
 		algorithmView.algorithmAdded(algorithm);
 	}
+
+	public void deleteAlgorithm(Algorithm algorithm) {
+		Algorithm existing = algorithmRepository.findById(algorithm.getId());
+		if (existing == null) {
+			algorithmView.showError("No existing algorithm with id " + algorithm.getId(), algorithm);
+			return;
+		}
+		
+		algorithmRepository.delete(algorithm);
+		algorithmView.algorithmDeleted(algorithm);
+	}
 }
