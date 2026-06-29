@@ -1,8 +1,13 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testcontainers.containers.MongoDBContainer;
@@ -42,6 +47,29 @@ public class AlgorithmMongoControllerTestcontainersIT {
 	@After
 	public void releaseMocks() throws Exception {
 		closeable.close();
+	}
+	
+	@Test
+	public void testAllAlgorithms() {
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		algorithmRepository.save(algorithm);
+		algorithmController.allAlgorithms();
+		verify(algorithmView).showAllAlgorithms(Arrays.asList(algorithm));
+	}
+	
+	@Test
+	public void testNewAlgorithm() {
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		algorithmController.newAlgorithm(algorithm);
+		verify(algorithmView).algorithmAdded(algorithm);
+	}
+	
+	@Test
+	public void testDeleteAlgorithm() {
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		algorithmRepository.save(algorithm);
+		algorithmController.deleteAlgorithm(algorithm);
+		verify(algorithmView).algorithmDeleted(algorithm);
 	}
 
 }
