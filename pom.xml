@@ -24,6 +24,8 @@
 		<jacoco.version>0.8.14</jacoco.version>
 		<pitest.version>1.15.3</pitest.version>
 		<testcontainers.version>1.21.4</testcontainers.version>
+		<failsafe.version>3.5.6</failsafe.version>
+		<build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -92,7 +94,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-failsafe-plugin</artifactId>
-					<version>3.5.5</version>
+					<version>${failsafe.version}</version>
 					<executions>
 						<execution>
 							<goals>
@@ -105,7 +107,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>${build-helper-maven-plugin.version}</version>
 					<executions>
 						<execution>
 							<id>add-test-source</id>
