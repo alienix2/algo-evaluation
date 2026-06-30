@@ -31,7 +31,7 @@
 		<sonar.tests>
 			${project.basedir}/src/test/java,${project.basedir}/src/it/java</sonar.tests>
 		<sonar.junit.reportPaths>
-			${project.build.directory}/surefire-reports,${project.build.directory}/failsafe-reports</sonar.junit.reportPaths>
+			${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
 		<sonar.coverage.exclusions>**/model/*.*</sonar.coverage.exclusions>
 	</properties>
 
