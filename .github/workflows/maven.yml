@@ -36,4 +36,4 @@ jobs:
         mvn verify $SONARGOAL
         -Dsonar.organization=mattemoni
         -Dsonar.host.url=https://sonarcloud.io
-        -Dsonar.projectKey=alienix2_algo-evaluation
+        -Dsonar.projectKey=mattemoni_algo-evaluation
