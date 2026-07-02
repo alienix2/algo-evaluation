@@ -46,8 +46,7 @@ public class DatasetMongoRepository implements DatasetRepository {
 
 	@Override
 	public void delete(Dataset dataset) {
-		// TODO Auto-generated method stub
-
+		datasetCollection.deleteOne(new Document("_id", dataset.getId()));
 	}
 
 }

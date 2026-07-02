@@ -86,6 +86,13 @@ public class DatasetMongoRepositoryTest {
 		assertThat(datasetCollection.find(new Document("_id", "1")).first()).isNotNull();
 	}
 	
+	@Test
+	public void testDeleteDataset() {
+		addTestDatasetToDatabase("1", "Dataset1", List.of(1, 2, 3));
+		datasetRepository.delete(new Dataset("1", "Dataset1", List.of(1, 2, 3)));
+		assertThat(datasetCollection.find(new Document("_id", "1")).first()).isNull();
+	}
+	
 	private void addTestDatasetToDatabase(String id, String name, List<Integer> integers) {
 		Document doc = new Document("_id", id)
 				.append("name", name)
