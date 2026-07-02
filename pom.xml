@@ -156,6 +156,8 @@
 								<excludes>
 									<exclude>
 										com/matteo/projects/algo_evaluation/model/*</exclude>
+									<exclude>
+										com/matteo/projects/algo_evaluation/view/swing/*</exclude>
 								</excludes>
 								<rules>
 									<rule>
