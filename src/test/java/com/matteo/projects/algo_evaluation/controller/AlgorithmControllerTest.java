@@ -12,12 +12,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.repository.AlgorithmRepository;
-import com.matteo.projects.algo_evaluation.view.AlgorithmView;
+import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
 public class AlgorithmControllerTest {
 
 	@Mock
-	private AlgorithmView algorithmView;
+	private AlgoEvaluationView algorithmView;
 
 	@Mock
 	private AlgorithmRepository algorithmRepository;
@@ -60,7 +60,7 @@ public class AlgorithmControllerTest {
 		Algorithm toAdd = new Algorithm("1", "AnotherSort");
 		when(algorithmRepository.findById("1")).thenReturn(existing);
 		algorithmController.newAlgorithm(toAdd);
-		verify(algorithmView).showError("Already existing algorithm with id 1", existing);
+		verify(algorithmView).showAlgorithmError("Already existing algorithm with id 1", existing);
 		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
 	}
 	
@@ -69,7 +69,7 @@ public class AlgorithmControllerTest {
 		Algorithm algo = new Algorithm("1", "BubbleSort");
 		when(algorithmRepository.findById("1")).thenReturn(null);
 		algorithmController.deleteAlgorithm(algo);
-		verify(algorithmView).showError("No existing algorithm with id 1", algo);
+		verify(algorithmView).showAlgorithmError("No existing algorithm with id 1", algo);
 		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
 	}
 	
