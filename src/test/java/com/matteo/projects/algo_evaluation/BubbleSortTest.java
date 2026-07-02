@@ -10,7 +10,7 @@ public class BubbleSortTest {
 	public void nullArrayTest() {
 		SortingAlgorithm bubbleSort = new BubbleSort();
 		Integer[] array = null;
-		assertThat(bubbleSort.sorted(array)).isNull();
+		assertThat(bubbleSort.sorted(array)).isEmpty();
 	}
 	
 	@Test

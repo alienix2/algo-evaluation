@@ -5,7 +5,7 @@ public class SelectionSort implements SortingAlgorithm {
 	@Override
 	public Integer[] sorted(Integer[] array) {
 		if (array == null) {
-			return null;
+			return new Integer[0];
 		}
 		for (int i = 0; i < array.length; i++) {
 			int minIndex = i;
