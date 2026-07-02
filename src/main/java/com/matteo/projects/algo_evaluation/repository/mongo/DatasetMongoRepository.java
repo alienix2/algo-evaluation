@@ -38,8 +38,10 @@ public class DatasetMongoRepository implements DatasetRepository {
 
 	@Override
 	public void save(Dataset dataset) {
-		// TODO Auto-generated method stub
-
+		Document doc = new Document("_id", dataset.getId())
+				.append("name", dataset.getName())
+				.append("integers", dataset.getIntegers());
+		datasetCollection.insertOne(doc);
 	}
 
 	@Override

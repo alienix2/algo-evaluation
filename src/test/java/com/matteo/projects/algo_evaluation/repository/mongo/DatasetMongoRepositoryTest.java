@@ -79,6 +79,13 @@ public class DatasetMongoRepositoryTest {
 		assertThat(dataset).isEqualTo(new Dataset("1", "Dataset1", List.of(1, 2, 3)));
 	}
 	
+	@Test
+	public void testSaveDataset() {
+		Dataset dataset = new Dataset("1", "Dataset1", List.of(1, 2, 3));
+		datasetRepository.save(dataset);
+		assertThat(datasetCollection.find(new Document("_id", "1")).first()).isNotNull();
+	}
+	
 	private void addTestDatasetToDatabase(String id, String name, List<Integer> integers) {
 		Document doc = new Document("_id", id)
 				.append("name", name)
