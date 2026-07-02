@@ -1,8 +1,10 @@
 package com.matteo.projects.algo_evaluation.repository.mongo;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.DATASET_COLLECTION_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
 import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.ALGO_EVALUATION_DB_NAME;
 
 import org.junit.AfterClass;
@@ -11,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mongodb.ServerAddress;
+import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -52,6 +55,35 @@ public class DatasetMongoRepositoryTest {
 	@Test
 	public void testFindAllDatabaseIsEmpty() {
 		assert(datasetRepository.findAll().isEmpty());
+	}
+	
+	@Test
+	public void testFindAllDatasetIsNotEmpty() {
+		addTestDatasetToDatabase("1", "Dataset1", List.of(1, 2, 3));
+		addTestDatasetToDatabase("2", "Dataset2", List.of(4, 5, 6));
+		assertThat(datasetRepository.findAll()).containsExactly(
+				new Dataset("1", "Dataset1", List.of(1, 2, 3)),
+				new Dataset("2", "Dataset2", List.of(4, 5, 6))
+		);
+	}
+	
+	@Test
+	public void testFindByIdNotFound() {
+		assertThat(datasetRepository.findById("nonexistent")).isNull();
+	}
+	
+	@Test
+	public void testFindByIdFound() {
+		addTestDatasetToDatabase("1", "Dataset1", List.of(1, 2, 3));
+		Dataset dataset = datasetRepository.findById("1");
+		assertThat(dataset).isEqualTo(new Dataset("1", "Dataset1", List.of(1, 2, 3)));
+	}
+	
+	private void addTestDatasetToDatabase(String id, String name, List<Integer> integers) {
+		Document doc = new Document("_id", id)
+				.append("name", name)
+				.append("integers", integers);
+		datasetCollection.insertOne(doc);
 	}
 
 }

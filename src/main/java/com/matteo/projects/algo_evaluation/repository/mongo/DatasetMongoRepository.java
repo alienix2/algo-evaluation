@@ -23,16 +23,17 @@ public class DatasetMongoRepository implements DatasetRepository {
 
 	@Override
 	public List<Dataset> findAll() {
-		return StreamSupport
-				.stream(datasetCollection.find().spliterator(), false)
+		return StreamSupport.stream(datasetCollection.find().spliterator(), false)
 				.map(doc -> new Dataset(doc.getString("_id"), doc.getString("name"), doc.getList("integers", Integer.class)))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Dataset findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return StreamSupport.stream(datasetCollection.find(new Document("_id", id)).spliterator(), false)
+				.map(doc -> new Dataset(doc.getString("_id"), doc.getString("name"), doc.getList("integers", Integer.class)))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
