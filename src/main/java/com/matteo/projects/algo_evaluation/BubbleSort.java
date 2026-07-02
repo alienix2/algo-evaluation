@@ -4,7 +4,7 @@ public class BubbleSort implements SortingAlgorithm {
 	@Override
 	public Integer[] sorted(Integer[] array) {
 		if (array == null) {
-			return null;
+			return new Integer[0];
 		}
 		boolean swapped = true;
 		while (swapped) {

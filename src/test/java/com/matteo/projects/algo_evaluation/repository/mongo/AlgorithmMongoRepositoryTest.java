@@ -34,13 +34,13 @@ public class AlgorithmMongoRepositoryTest {
 	private MongoCollection<Document> algorithmCollection;
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() {
 		mongoServer = new MongoServer(new MemoryBackend());
 		serverAddress = mongoServer.bind();
 	}
 
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public static void tearDownAfterClass() {
 		mongoServer.shutdown();
 	}
 

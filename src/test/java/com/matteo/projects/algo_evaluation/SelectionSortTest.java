@@ -10,7 +10,7 @@ public class SelectionSortTest {
 	public void nullArrayTest() {
 		SortingAlgorithm selectionSort = new SelectionSort();
 		Integer[] array = null;
-		assertThat(selectionSort.sorted(array)).isNull();
+		assertThat(selectionSort.sorted(array)).isEmpty();
 	}
 	
 	@Test
