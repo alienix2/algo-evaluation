@@ -25,6 +25,7 @@
 		<testcontainers.version>1.21.4</testcontainers.version>
 		<failsafe.version>3.5.6</failsafe.version>
 		<build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
+		<assertjswing.version>3.17.1</assertjswing.version>
 		<sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<sonar.tests>
@@ -88,6 +89,13 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-swing-junit</artifactId>
+			<version>${assertjswing.version}</version>
 			<scope>test</scope>
 		</dependency>
 
