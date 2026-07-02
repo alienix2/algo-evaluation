@@ -81,7 +81,7 @@ public class AlgorithmMongoRepositoryTest {
 	public void testFindByIdFound() {
 		addTestAlgorithmToDatabase("1", "test1");
 		addTestAlgorithmToDatabase("2", "test2");
-		assertThat(algorithmRepository.findById("2")).isEqualTo(new Algorithm("2" + "", "test2"));
+		assertThat(algorithmRepository.findById("2")).isEqualTo(new Algorithm("2", "test2"));
 	}
 
 	@Test

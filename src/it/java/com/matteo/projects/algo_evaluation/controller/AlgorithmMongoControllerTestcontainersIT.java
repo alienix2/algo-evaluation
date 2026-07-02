@@ -15,7 +15,7 @@ import org.testcontainers.containers.MongoDBContainer;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.repository.AlgorithmRepository;
 import com.matteo.projects.algo_evaluation.repository.mongo.AlgorithmMongoRepository;
-import com.matteo.projects.algo_evaluation.view.AlgorithmView;
+import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -26,7 +26,7 @@ public class AlgorithmMongoControllerTestcontainersIT {
 	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:6.0");
 
 	@Mock
-	private AlgorithmView algorithmView;
+	private AlgoEvaluationView algorithmView;
 
 	private AlgorithmRepository algorithmRepository;
 	private AlgorithmController algorithmController;
