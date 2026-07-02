@@ -29,4 +29,15 @@ public class DatasetController {
 		datasetView.datasetAdded(dataset);
 	}
 
+	public void deleteDataset(Dataset dataset) {
+		Dataset existing = datasetRepository.findById(dataset.getId());
+		if (existing == null) {
+			datasetView.showDatasetError("No existing dataset with id " + dataset.getId(), dataset);
+			return;
+		}
+		
+		datasetRepository.delete(dataset);
+		datasetView.datasetDeleted(dataset);
+	}
+
 }

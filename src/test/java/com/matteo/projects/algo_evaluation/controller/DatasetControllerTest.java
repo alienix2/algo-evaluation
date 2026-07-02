@@ -1,7 +1,7 @@
 package com.matteo.projects.algo_evaluation.controller;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
@@ -68,6 +68,25 @@ public class DatasetControllerTest {
 		when(datasetRepository.findById("1")).thenReturn(existing);
 		datasetController.newDataset(toAdd);
 		verify(datasetView).showDatasetError("Already existing dataset with id " + toAdd.getId(), existing);
-		verifyNoInteractions(ignoreStubs(datasetRepository));
+		verifyNoMoreInteractions(ignoreStubs(datasetRepository));
+	}
+
+	@Test
+	public void testDeleteDatasetDoesNotExist() {
+		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
+		when(datasetRepository.findById("1")).thenReturn(null);
+		datasetController.deleteDataset(dataset);
+		verify(datasetView).showDatasetError("No existing dataset with id 1", dataset);
+		verifyNoMoreInteractions(ignoreStubs(datasetRepository));
+	}
+
+	@Test
+	public void testDeleteDatasetExists() {
+		Dataset dataset = new Dataset("1", "SmallIntegers", Arrays.asList(3, 1, 2));
+		when(datasetRepository.findById("1")).thenReturn(dataset);
+		datasetController.deleteDataset(dataset);
+		InOrder inOrder = inOrder(datasetRepository, datasetView);
+		inOrder.verify(datasetRepository).delete(dataset);
+		inOrder.verify(datasetView).datasetDeleted(dataset);
 	}
 }
