@@ -5,6 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridBagLayout;
+import javax.swing.JList;
+import java.awt.GridBagConstraints;
+import javax.swing.JScrollPane;
+import java.awt.Insets;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.Component;
+import java.awt.Font;
 
 public class AlgorithmSwingView extends JFrame {
 
@@ -31,11 +40,87 @@ public class AlgorithmSwingView extends JFrame {
 	 * Create the frame.
 	 */
 	public AlgorithmSwingView() {
+		setTitle("Sorting Algorithm evluation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{100, 100, 0};
+		gbl_contentPane.rowHeights = new int[]{110, 110, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		JScrollPane algorithmScrollPane = new JScrollPane();
+		GridBagConstraints gbc_algorithmScrollPane = new GridBagConstraints();
+		gbc_algorithmScrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_algorithmScrollPane.fill = GridBagConstraints.BOTH;
+		gbc_algorithmScrollPane.gridx = 0;
+		gbc_algorithmScrollPane.gridy = 0;
+		contentPane.add(algorithmScrollPane, gbc_algorithmScrollPane);
+		
+		JList algorithmList = new JList();
+		algorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
+		algorithmList.setName("algorithmList");
+		algorithmScrollPane.setViewportView(algorithmList);
+		
+		JLabel lblAlgorithmList = new JLabel("Algorithm list");
+		lblAlgorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
+		algorithmScrollPane.setColumnHeaderView(lblAlgorithmList);
+		
+		JScrollPane datasetScrollPane = new JScrollPane();
+		GridBagConstraints gbc_datasetScrollPane = new GridBagConstraints();
+		gbc_datasetScrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_datasetScrollPane.fill = GridBagConstraints.BOTH;
+		gbc_datasetScrollPane.gridx = 1;
+		gbc_datasetScrollPane.gridy = 0;
+		contentPane.add(datasetScrollPane, gbc_datasetScrollPane);
+		
+		JList datasetList = new JList();
+		datasetList.setFont(new Font("Dialog", Font.BOLD, 20));
+		datasetList.setName("datasetList");
+		datasetScrollPane.setViewportView(datasetList);
+		
+		JLabel lblDatasetList = new JLabel("Dataset list");
+		lblDatasetList.setFont(new Font("Dialog", Font.BOLD, 20));
+		datasetScrollPane.setColumnHeaderView(lblDatasetList);
+		
+		JScrollPane runScrollPane = new JScrollPane();
+		GridBagConstraints gbc_runScrollPane = new GridBagConstraints();
+		gbc_runScrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_runScrollPane.gridwidth = 2;
+		gbc_runScrollPane.fill = GridBagConstraints.BOTH;
+		gbc_runScrollPane.gridx = 0;
+		gbc_runScrollPane.gridy = 1;
+		contentPane.add(runScrollPane, gbc_runScrollPane);
+		
+		JList runList = new JList();
+		runList.setFont(new Font("Dialog", Font.BOLD, 20));
+		runList.setName("runList");
+		runScrollPane.setViewportView(runList);
+		
+		JLabel lblRunList = new JLabel("Run list");
+		lblRunList.setFont(new Font("Dialog", Font.BOLD, 20));
+		runScrollPane.setColumnHeaderView(lblRunList);
+		
+		JButton runButton = new JButton("Run");
+		runButton.setFont(new Font("Dialog", Font.BOLD, 24));
+		runButton.setEnabled(false);
+		GridBagConstraints gbc_runButton = new GridBagConstraints();
+		gbc_runButton.insets = new Insets(0, 0, 0, 5);
+		gbc_runButton.gridx = 0;
+		gbc_runButton.gridy = 2;
+		contentPane.add(runButton, gbc_runButton);
+		
+		JLabel errorLabel = new JLabel(" ");
+		errorLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		errorLabel.setName("errorLabel");
+		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
+		gbc_errorLabel.gridx = 1;
+		gbc_errorLabel.gridy = 2;
+		contentPane.add(errorLabel, gbc_errorLabel);
 
 	}
 
