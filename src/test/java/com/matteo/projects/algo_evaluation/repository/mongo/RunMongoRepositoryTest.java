@@ -83,7 +83,14 @@ public class RunMongoRepositoryTest {
 		runMongoRepository.save(run);
 		assertThat(runCollection.find(new Document("_id", "1")).first()).isNotNull();
 	}
-
+	
+	@Test
+	public void testDeleteRun() {
+		addTestRunToDatabase("1", "1", "1", 1);
+		runMongoRepository.delete(new Run("1", "1", "1", 1));
+		assertThat(runCollection.find(new Document("_id", "1")).first()).isNull();
+	}
+	
 	private void addTestRunToDatabase(String id, String algorithmId, String datasetId, long executionTime) {
 		Document doc = new Document("_id", id)
 				.append("algorithmId", algorithmId)
@@ -91,6 +98,5 @@ public class RunMongoRepositoryTest {
 				.append("executionTime", executionTime);
 		runCollection.insertOne(doc);
 	}
-	
 	
 }

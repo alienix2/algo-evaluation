@@ -49,8 +49,7 @@ public class RunMongoRepository implements RunRepository {
 
 	@Override
 	public void delete(Run run) {
-		// TODO Auto-generated method stub
-		
+		algorithmCollection.deleteOne(new Document("_id", run.getId()));
 	}
 
 }
