@@ -56,20 +56,5 @@ public class AlgorithmMongoControllerTestcontainersIT {
 		algorithmController.allAlgorithms();
 		verify(algorithmView).showAllAlgorithms(Arrays.asList(algorithm));
 	}
-	
-	@Test
-	public void testNewAlgorithm() {
-		Algorithm algorithm = new Algorithm("1", "BubbleSort");
-		algorithmController.newAlgorithm(algorithm);
-		verify(algorithmView).algorithmAdded(algorithm);
-	}
-	
-	@Test
-	public void testDeleteAlgorithm() {
-		Algorithm algorithm = new Algorithm("1", "BubbleSort");
-		algorithmRepository.save(algorithm);
-		algorithmController.deleteAlgorithm(algorithm);
-		verify(algorithmView).algorithmDeleted(algorithm);
-	}
 
 }

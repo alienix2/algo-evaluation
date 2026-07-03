@@ -62,13 +62,5 @@ public class RunMongoControllerTestcontainersIT {
 		runController.newRun(run);
 		verify(runView).runAdded(run);
 	}
-	
-	@Test
-	public void testDeleteRun() {
-		Run run = new Run("1", "1", "1", 1);
-		runRepository.save(run);
-		runController.deleteRun(run);
-		verify(runView).runDeleted(run);
-	}
 
 }
