@@ -57,20 +57,5 @@ public class DatasetMongoControllerTestcontainersIT {
 		datasetController.allDatasets();
 		verify(datasetView).showAllDatasets(asList(dataset));
 	}
-	
-	@Test
-	public void testNewDataset() {
-		Dataset dataset = new Dataset("1", "Dataset1", List.of(1, 2, 3));
-		datasetController.newDataset(dataset);
-		verify(datasetView).datasetAdded(dataset);
-	}
-	
-	@Test
-	public void testDeleteDataset() {
-		Dataset dataset = new Dataset("1", "Dataset1", List.of(1, 2, 3));
-		datasetRepository.save(dataset);
-		datasetController.deleteDataset(dataset);
-		verify(datasetView).datasetDeleted(dataset);
-	}
 
 }

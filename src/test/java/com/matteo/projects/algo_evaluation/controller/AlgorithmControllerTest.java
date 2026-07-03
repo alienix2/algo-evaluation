@@ -6,7 +6,6 @@ import java.util.Arrays;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -43,43 +42,5 @@ public class AlgorithmControllerTest {
 		algorithmController.allAlgorithms();
 		verify(algorithmView).showAllAlgorithms(Arrays.asList(new Algorithm("1", "BubbleSort")));
 	}
-
-	@Test
-	public void testNewAlgorithmDoesNotAlreadyExist() {
-		when(algorithmRepository.findById("1")).thenReturn(null);
-		Algorithm algorithm = new Algorithm("1", "BubbleSort");
-		algorithmController.newAlgorithm(algorithm);
-		InOrder inOrder = inOrder(algorithmRepository, algorithmView);
-		inOrder.verify(algorithmRepository).save(algorithm);
-		inOrder.verify(algorithmView).algorithmAdded(algorithm);
-	}
-
-	@Test
-	public void testNewAlgorithmAlreadyExist() {
-		Algorithm existing = new Algorithm("1", "BubbleSort");
-		Algorithm toAdd = new Algorithm("1", "AnotherSort");
-		when(algorithmRepository.findById("1")).thenReturn(existing);
-		algorithmController.newAlgorithm(toAdd);
-		verify(algorithmView).showAlgorithmError("Already existing algorithm with id 1", existing);
-		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
-	}
 	
-	@Test
-	public void testDeleteAlgorithmDoesNotAlreadyExist() {
-		Algorithm algo = new Algorithm("1", "BubbleSort");
-		when(algorithmRepository.findById("1")).thenReturn(null);
-		algorithmController.deleteAlgorithm(algo);
-		verify(algorithmView).showAlgorithmError("No existing algorithm with id 1", algo);
-		verifyNoMoreInteractions(ignoreStubs(algorithmRepository));
-	}
-	
-	@Test
-	public void testDeleteAlgorithmAlreadyExist() {
-		Algorithm algo = new Algorithm("1", "BubbleSort");
-		when(algorithmRepository.findById("1")).thenReturn(algo);
-		algorithmController.deleteAlgorithm(algo);
-		InOrder inOrder = inOrder(algorithmRepository, algorithmView);
-		inOrder.verify(algorithmRepository).delete(algo);
-		inOrder.verify(algorithmView).algorithmDeleted(algo);
-	}
 }

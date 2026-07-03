@@ -70,24 +70,5 @@ public class RunControllerTest {
 		verify(runView).showRunError("Already existing run with id " + toAdd.getId(), existing);
 		verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
-	
-	@Test
-	public void testDeleteRunDoesNotAlreadyExist() {
-		Run toDelete = new Run("1", "1", "1", 1);
-		when(runRepository.findById("1")).thenReturn(null);
-		runController.deleteRun(toDelete);
-		verify(runView).showRunError("No existing run with id 1", toDelete);
-		verifyNoMoreInteractions(ignoreStubs(runRepository));
-	}
-	
-	@Test
-	public void testDeleteRunAlreadyExist() {
-		Run existing = new Run("1", "1", "1", 1);
-		when(runRepository.findById("1")).thenReturn(existing);
-		runController.deleteRun(existing);
-		InOrder inOrder = inOrder(runRepository, runView);
-		inOrder.verify(runRepository).delete(existing);
-		inOrder.verify(runView).runDeleted(existing);
-	}
 
 }

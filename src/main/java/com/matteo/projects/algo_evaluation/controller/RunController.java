@@ -28,16 +28,5 @@ public class RunController {
 		runRepository.save(run);
 		runView.runAdded(run);
 	}
-
-	public void deleteRun(Run run) {
-		Run existing = runRepository.findById(run.getId());
-		if (existing == null) {
-			runView.showRunError("No existing run with id " + run.getId(), run);
-			return;
-		}
-		
-		runRepository.delete(run);
-		runView.runDeleted(run);
-	}
-
+	
 }
