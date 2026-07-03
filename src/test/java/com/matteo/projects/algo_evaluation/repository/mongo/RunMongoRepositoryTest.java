@@ -1,7 +1,7 @@
 package com.matteo.projects.algo_evaluation.repository.mongo;
 
-import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.ALGO_EVALUATION_DB_NAME;
-import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.DATASET_COLLECTION_NAME;
+import static com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository.ALGO_EVALUATION_DB_NAME;
+import static com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository.RUN_COLLECTION_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.InetSocketAddress;
@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.matteo.projects.algo_evaluation.model.Run;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
@@ -46,11 +47,43 @@ public class RunMongoRepositoryTest {
 		// Clear the database before each test
 		database.drop();
 		runMongoRepository = new RunMongoRepository(mongoClient);
-		runCollection = database.getCollection(DATASET_COLLECTION_NAME);
+		runCollection = database.getCollection(RUN_COLLECTION_NAME);
 	}
 	
 	@Test
 	public void testFindAllDatabaseIsEmpty() {
 		assertThat(runMongoRepository.findAll()).isEmpty();
 	}
+	
+	@Test
+	public void testFindAllDatabaseIsNotEmpty() {
+		addTestRunToDatabase("1", "1", "1", 1);
+		addTestRunToDatabase("2", "2", "2", 2);
+		assertThat(runMongoRepository.findAll()).containsExactly(
+				new Run("1", "1", "1", 1),
+				new Run("2", "2", "2", 2)
+		);
+	}
+	
+	@Test
+	public void testFindByIdNotFound() {
+		assertThat(runMongoRepository.findById("nonexistent")).isNull();
+	}
+	
+	@Test
+	public void testFindByIdFound() {
+		addTestRunToDatabase("1", "1", "1", 1);
+		Run run = runMongoRepository.findById("1");
+		assertThat(run).isEqualTo(new Run("1", "1", "1", 1));
+	}
+
+	private void addTestRunToDatabase(String id, String algorithmId, String datasetId, long executionTime) {
+		Document doc = new Document("_id", id)
+				.append("algorithmId", algorithmId)
+				.append("datasetId", datasetId)
+				.append("executionTime", executionTime);
+		runCollection.insertOne(doc);
+	}
+	
+	
 }

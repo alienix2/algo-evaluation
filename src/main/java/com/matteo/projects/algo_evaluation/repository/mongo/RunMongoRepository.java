@@ -14,11 +14,11 @@ import com.matteo.projects.algo_evaluation.repository.RunRepository;
 public class RunMongoRepository implements RunRepository {
 	
 	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
-	public static final String ALGORITHM_COLLECTION_NAME = "runs";
+	public static final String RUN_COLLECTION_NAME = "runs";
 	private MongoCollection<Document> algorithmCollection;
 
 	public RunMongoRepository(MongoClient mongoClient) {
-		algorithmCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(ALGORITHM_COLLECTION_NAME);
+		algorithmCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(RUN_COLLECTION_NAME);
 	}
 
 	@Override
@@ -31,8 +31,11 @@ public class RunMongoRepository implements RunRepository {
 
 	@Override
 	public Run findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return StreamSupport
+				.stream(algorithmCollection.find(new Document("_id", id)).spliterator(), false)
+				.map(doc -> new Run(doc.getString("_id"), doc.getString("algorithmId"), doc.getString("datasetId"), doc.getLong("executionTime")))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
