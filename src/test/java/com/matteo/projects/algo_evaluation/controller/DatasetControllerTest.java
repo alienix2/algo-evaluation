@@ -72,7 +72,7 @@ public class DatasetControllerTest {
 	}
 
 	@Test
-	public void testDeleteDatasetDoesNotExist() {
+	public void testDeleteDatasetDoesNotAlreadyExist() {
 		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
 		when(datasetRepository.findById("1")).thenReturn(null);
 		datasetController.deleteDataset(dataset);
@@ -81,7 +81,7 @@ public class DatasetControllerTest {
 	}
 
 	@Test
-	public void testDeleteDatasetExists() {
+	public void testDeleteDatasetAlreadyExist() {
 		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(3, 1, 2));
 		when(datasetRepository.findById("1")).thenReturn(dataset);
 		datasetController.deleteDataset(dataset);
