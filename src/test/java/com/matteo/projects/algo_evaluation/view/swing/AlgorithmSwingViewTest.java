@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.matteo.projects.algo_evaluation.model.Algorithm;
+import com.matteo.projects.algo_evaluation.model.Dataset;
 
 @RunWith(GUITestRunner.class)
 public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
@@ -49,6 +50,16 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> algorithmSwingView.showAllAlgorithms(Arrays.asList(algo1, algo2)));
 		String[] listContents = window.list("algorithmList").contents();
 		assertThat(listContents).containsExactly(algo1.toString(), algo2.toString());
+	}
+	
+	@Test
+	@GUITest
+	public void testShowAllDatasetsShouldAddDatasetsDescriptionsToTheList() {
+		Dataset dataset1 = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
+		Dataset dataset2 = new Dataset("2", "Dataset2", Arrays.asList(4, 5, 6));
+		GuiActionRunner.execute(() -> algorithmSwingView.showAllDatasets(Arrays.asList(dataset1, dataset2)));
+		String[] listContents = window.list("datasetList").contents();
+		assertThat(listContents).containsExactly(dataset1.toString(), dataset2.toString());
 	}
 
 }
