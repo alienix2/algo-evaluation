@@ -15,16 +15,16 @@ public class RunMongoRepository implements RunRepository {
 	
 	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String RUN_COLLECTION_NAME = "runs";
-	private MongoCollection<Document> algorithmCollection;
+	private MongoCollection<Document> runCollection;
 
 	public RunMongoRepository(MongoClient mongoClient) {
-		algorithmCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(RUN_COLLECTION_NAME);
+		runCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(RUN_COLLECTION_NAME);
 	}
 
 	@Override
 	public List<Run> findAll() {
 		return StreamSupport
-				.stream(algorithmCollection.find().spliterator(), false)
+				.stream(runCollection.find().spliterator(), false)
 				.map(doc -> new Run(doc.getString("_id"), doc.getString("algorithmId"), doc.getString("datasetId"), doc.getLong("executionTime")))
 				.collect(Collectors.toList());
 	}
@@ -32,7 +32,7 @@ public class RunMongoRepository implements RunRepository {
 	@Override
 	public Run findById(String id) {
 		return StreamSupport
-				.stream(algorithmCollection.find(new Document("_id", id)).spliterator(), false)
+				.stream(runCollection.find(new Document("_id", id)).spliterator(), false)
 				.map(doc -> new Run(doc.getString("_id"), doc.getString("algorithmId"), doc.getString("datasetId"), doc.getLong("executionTime")))
 				.findFirst()
 				.orElse(null);
@@ -44,12 +44,12 @@ public class RunMongoRepository implements RunRepository {
 				.append("algorithmId", run.getAlgorithmId())
 				.append("datasetId", run.getDatasetId())
 				.append("executionTime", run.getExecutionTime());
-		algorithmCollection.insertOne(doc);
+		runCollection.insertOne(doc);
 	}
 
 	@Override
 	public void delete(Run run) {
-		algorithmCollection.deleteOne(new Document("_id", run.getId()));
+		runCollection.deleteOne(new Document("_id", run.getId()));
 	}
 
 }
