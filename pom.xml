@@ -175,6 +175,8 @@
 								com.matteo.projects.algo_evaluation.model.Algorithm</param>
 							<param>
 								com.matteo.projects.algo_evaluation.model.Dataset</param>
+							<param>
+								com.matteo.projects.algo_evaluation.model.Run</param>
 						</excludedClasses>
 						<targetClasses>
 							<param>com.matteo.projects.algo_evaluation.*</param>

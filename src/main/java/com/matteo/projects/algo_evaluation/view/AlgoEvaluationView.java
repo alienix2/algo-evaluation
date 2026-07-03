@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
+import com.matteo.projects.algo_evaluation.model.Run;
 
 public interface AlgoEvaluationView {
 
@@ -13,8 +14,13 @@ public interface AlgoEvaluationView {
 	void showAlgorithmError(String string, Algorithm existing);
 	
 	void showAllDatasets(List<Dataset> asList);
-	void datasetAdded(Object dataset);
-	void datasetDeleted(Object dataset);
-	void showDatasetError(String string, Object existing);
+	void datasetAdded(Dataset dataset);
+	void datasetDeleted(Dataset dataset);
+	void showDatasetError(String string, Dataset existing);
+	
+	void showAllRuns(List<Run> asList);
+	void runAdded(Run run);
+	void runDeleted(Run run);
+	void showRunError(String string, Run existing);
 
 }
