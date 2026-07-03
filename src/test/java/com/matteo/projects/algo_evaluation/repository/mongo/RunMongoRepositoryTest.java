@@ -76,6 +76,13 @@ public class RunMongoRepositoryTest {
 		Run run = runMongoRepository.findById("1");
 		assertThat(run).isEqualTo(new Run("1", "1", "1", 1));
 	}
+	
+	@Test
+	public void testSaveRun() {
+		Run run = new Run("1", "1", "1", 1);
+		runMongoRepository.save(run);
+		assertThat(runCollection.find(new Document("_id", "1")).first()).isNotNull();
+	}
 
 	private void addTestRunToDatabase(String id, String algorithmId, String datasetId, long executionTime) {
 		Document doc = new Document("_id", id)

@@ -40,8 +40,11 @@ public class RunMongoRepository implements RunRepository {
 
 	@Override
 	public void save(Run run) {
-		// TODO Auto-generated method stub
-		
+		Document doc = new Document("_id", run.getId())
+				.append("algorithmId", run.getAlgorithmId())
+				.append("datasetId", run.getDatasetId())
+				.append("executionTime", run.getExecutionTime());
+		algorithmCollection.insertOne(doc);
 	}
 
 	@Override
