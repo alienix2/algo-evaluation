@@ -26,7 +26,7 @@ public class AlgorithmSwingView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	
+
 	private DefaultListModel<Algorithm> listAlgorithmsModel;
 	private DefaultListModel<Dataset> listDatasetsModel;
 	private DefaultListModel<Run> listRunsModel;
@@ -58,12 +58,12 @@ public class AlgorithmSwingView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{100, 100, 0};
-		gbl_contentPane.rowHeights = new int[]{110, 110, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 100, 100, 0 };
+		gbl_contentPane.rowHeights = new int[] { 110, 110, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JScrollPane algorithmScrollPane = new JScrollPane();
 		GridBagConstraints gbc_algorithmScrollPane = new GridBagConstraints();
 		gbc_algorithmScrollPane.insets = new Insets(0, 0, 5, 5);
@@ -71,17 +71,17 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_algorithmScrollPane.gridx = 0;
 		gbc_algorithmScrollPane.gridy = 0;
 		contentPane.add(algorithmScrollPane, gbc_algorithmScrollPane);
-		
+
 		listAlgorithmsModel = new DefaultListModel<>();
 		JList<Algorithm> algorithmList = new JList<>(listAlgorithmsModel);
 		algorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
 		algorithmList.setName("algorithmList");
 		algorithmScrollPane.setViewportView(algorithmList);
-		
+
 		JLabel lblAlgorithmList = new JLabel("Algorithm list");
 		lblAlgorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
 		algorithmScrollPane.setColumnHeaderView(lblAlgorithmList);
-		
+
 		JScrollPane datasetScrollPane = new JScrollPane();
 		GridBagConstraints gbc_datasetScrollPane = new GridBagConstraints();
 		gbc_datasetScrollPane.insets = new Insets(0, 0, 5, 0);
@@ -89,17 +89,17 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_datasetScrollPane.gridx = 1;
 		gbc_datasetScrollPane.gridy = 0;
 		contentPane.add(datasetScrollPane, gbc_datasetScrollPane);
-		
+
 		listDatasetsModel = new DefaultListModel<>();
 		JList<Dataset> datasetList = new JList<>(listDatasetsModel);
 		datasetList.setFont(new Font("Dialog", Font.BOLD, 20));
 		datasetList.setName("datasetList");
 		datasetScrollPane.setViewportView(datasetList);
-		
+
 		JLabel lblDatasetList = new JLabel("Dataset list");
 		lblDatasetList.setFont(new Font("Dialog", Font.BOLD, 20));
 		datasetScrollPane.setColumnHeaderView(lblDatasetList);
-		
+
 		JScrollPane runScrollPane = new JScrollPane();
 		GridBagConstraints gbc_runScrollPane = new GridBagConstraints();
 		gbc_runScrollPane.insets = new Insets(0, 0, 5, 0);
@@ -108,17 +108,17 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_runScrollPane.gridx = 0;
 		gbc_runScrollPane.gridy = 1;
 		contentPane.add(runScrollPane, gbc_runScrollPane);
-		
+
 		listRunsModel = new DefaultListModel<>();
 		JList<Run> runList = new JList<>(listRunsModel);
 		runList.setFont(new Font("Dialog", Font.BOLD, 20));
 		runList.setName("runList");
 		runScrollPane.setViewportView(runList);
-		
+
 		JLabel lblRunList = new JLabel("Run list");
 		lblRunList.setFont(new Font("Dialog", Font.BOLD, 20));
 		runScrollPane.setColumnHeaderView(lblRunList);
-		
+
 		JButton runButton = new JButton("Run");
 		runButton.setFont(new Font("Dialog", Font.BOLD, 24));
 		runButton.setEnabled(false);
@@ -127,7 +127,7 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_runButton.gridx = 0;
 		gbc_runButton.gridy = 2;
 		contentPane.add(runButton, gbc_runButton);
-		
+
 		JLabel errorLabel = new JLabel(" ");
 		errorLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		errorLabel.setName("errorLabel");
@@ -135,7 +135,11 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_errorLabel.gridx = 1;
 		gbc_errorLabel.gridy = 2;
 		contentPane.add(errorLabel, gbc_errorLabel);
-		
+
+		datasetList.addListSelectionListener(e -> runButton
+				.setEnabled(algorithmList.getSelectedIndex() != -1 && datasetList.getSelectedIndex() != -1));
+		algorithmList.addListSelectionListener(e -> runButton
+				.setEnabled(algorithmList.getSelectedIndex() != -1 && datasetList.getSelectedIndex() != -1));
 	}
 
 	public void showAllAlgorithms(List<Algorithm> algorithms) {
@@ -148,6 +152,14 @@ public class AlgorithmSwingView extends JFrame {
 
 	public void showAllRuns(List<Run> runs) {
 		runs.stream().forEach(listRunsModel::addElement);
+	}
+
+	public DefaultListModel<Algorithm> getListAlgorithmsModel() {
+		return listAlgorithmsModel;
+	}
+
+	public DefaultListModel<Dataset> getListDatasetsModel() {
+		return listDatasetsModel;
 	}
 
 }
