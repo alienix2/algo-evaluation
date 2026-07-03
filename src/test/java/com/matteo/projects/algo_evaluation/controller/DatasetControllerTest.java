@@ -82,7 +82,7 @@ public class DatasetControllerTest {
 
 	@Test
 	public void testDeleteDatasetExists() {
-		Dataset dataset = new Dataset("1", "SmallIntegers", Arrays.asList(3, 1, 2));
+		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(3, 1, 2));
 		when(datasetRepository.findById("1")).thenReturn(dataset);
 		datasetController.deleteDataset(dataset);
 		InOrder inOrder = inOrder(datasetRepository, datasetView);

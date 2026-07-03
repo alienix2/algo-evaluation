@@ -54,7 +54,7 @@ public class DatasetMongoRepositoryTest {
 	
 	@Test
 	public void testFindAllDatabaseIsEmpty() {
-		assert(datasetRepository.findAll().isEmpty());
+		assertThat(datasetRepository.findAll()).isEmpty();
 	}
 	
 	@Test
