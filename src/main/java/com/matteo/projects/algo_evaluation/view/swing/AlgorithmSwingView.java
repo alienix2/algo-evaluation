@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
+import com.matteo.projects.algo_evaluation.model.Run;
 
 import java.awt.GridBagLayout;
 import javax.swing.JList;
@@ -28,6 +29,7 @@ public class AlgorithmSwingView extends JFrame {
 	
 	private DefaultListModel<Algorithm> listAlgorithmsModel;
 	private DefaultListModel<Dataset> listDatasetsModel;
+	private DefaultListModel<Run> listRunsModel;
 
 	/**
 	 * Launch the application.
@@ -107,7 +109,8 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_runScrollPane.gridy = 1;
 		contentPane.add(runScrollPane, gbc_runScrollPane);
 		
-		JList runList = new JList();
+		listRunsModel = new DefaultListModel<>();
+		JList<Run> runList = new JList<>(listRunsModel);
 		runList.setFont(new Font("Dialog", Font.BOLD, 20));
 		runList.setName("runList");
 		runScrollPane.setViewportView(runList);
@@ -141,6 +144,10 @@ public class AlgorithmSwingView extends JFrame {
 
 	public void showAllDatasets(List<Dataset> datasets) {
 		datasets.stream().forEach(listDatasetsModel::addElement);
+	}
+
+	public void showAllRuns(List<Run> runs) {
+		runs.stream().forEach(listRunsModel::addElement);
 	}
 
 }
