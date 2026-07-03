@@ -13,6 +13,9 @@ import com.matteo.projects.algo_evaluation.repository.RunRepository;
 
 public class RunMongoRepository implements RunRepository {
 	
+	private static final String EXECUTION_TIME = "executionTime";
+	private static final String DATASET_ID = "datasetId";
+	private static final String ALGORITHM_ID = "algorithmId";
 	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String RUN_COLLECTION_NAME = "runs";
 	private MongoCollection<Document> runCollection;
@@ -25,7 +28,7 @@ public class RunMongoRepository implements RunRepository {
 	public List<Run> findAll() {
 		return StreamSupport
 				.stream(runCollection.find().spliterator(), false)
-				.map(doc -> new Run(doc.getString("_id"), doc.getString("algorithmId"), doc.getString("datasetId"), doc.getLong("executionTime")))
+				.map(doc -> new Run(doc.getString("_id"), doc.getString(ALGORITHM_ID), doc.getString(DATASET_ID), doc.getLong(EXECUTION_TIME)))
 				.collect(Collectors.toList());
 	}
 
@@ -33,7 +36,7 @@ public class RunMongoRepository implements RunRepository {
 	public Run findById(String id) {
 		return StreamSupport
 				.stream(runCollection.find(new Document("_id", id)).spliterator(), false)
-				.map(doc -> new Run(doc.getString("_id"), doc.getString("algorithmId"), doc.getString("datasetId"), doc.getLong("executionTime")))
+				.map(doc -> new Run(doc.getString("_id"), doc.getString(ALGORITHM_ID), doc.getString(DATASET_ID), doc.getLong(EXECUTION_TIME)))
 				.findFirst()
 				.orElse(null);
 	}
@@ -41,9 +44,9 @@ public class RunMongoRepository implements RunRepository {
 	@Override
 	public void save(Run run) {
 		Document doc = new Document("_id", run.getId())
-				.append("algorithmId", run.getAlgorithmId())
-				.append("datasetId", run.getDatasetId())
-				.append("executionTime", run.getExecutionTime());
+				.append(ALGORITHM_ID, run.getAlgorithmId())
+				.append(DATASET_ID, run.getDatasetId())
+				.append(EXECUTION_TIME, run.getExecutionTime());
 		runCollection.insertOne(doc);
 	}
 
