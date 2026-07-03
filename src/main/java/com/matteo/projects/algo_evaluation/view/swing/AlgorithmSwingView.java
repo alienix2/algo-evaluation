@@ -5,20 +5,27 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.matteo.projects.algo_evaluation.model.Algorithm;
+
 import java.awt.GridBagLayout;
 import javax.swing.JList;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
 import java.awt.Insets;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import java.awt.Component;
 import java.awt.Font;
 
 public class AlgorithmSwingView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	private DefaultListModel<Algorithm> listAlgorithmsModel;
 
 	/**
 	 * Launch the application.
@@ -61,7 +68,8 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_algorithmScrollPane.gridy = 0;
 		contentPane.add(algorithmScrollPane, gbc_algorithmScrollPane);
 		
-		JList algorithmList = new JList();
+		listAlgorithmsModel = new DefaultListModel<>();
+		JList<Algorithm> algorithmList = new JList<>(listAlgorithmsModel);
 		algorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
 		algorithmList.setName("algorithmList");
 		algorithmScrollPane.setViewportView(algorithmList);
@@ -121,7 +129,11 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_errorLabel.gridx = 1;
 		gbc_errorLabel.gridy = 2;
 		contentPane.add(errorLabel, gbc_errorLabel);
+		
+	}
 
+	public void showAllAlgorithms(List<Algorithm> algorithms) {
+		algorithms.stream().forEach(listAlgorithmsModel::addElement);
 	}
 
 }
