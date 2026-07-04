@@ -28,6 +28,8 @@ public class AlgorithmSwingView extends JFrame {
 	private static final String DIALOG = "Dialog";
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	private JLabel errorLabel;
 
 	private DefaultListModel<Algorithm> listAlgorithmsModel;
 	private DefaultListModel<Dataset> listDatasetsModel;
@@ -120,7 +122,7 @@ public class AlgorithmSwingView extends JFrame {
 		runButton.addActionListener(
 				e -> runController.newRun(algorithmList.getSelectedValue(), datasetList.getSelectedValue()));
 
-		JLabel errorLabel = new JLabel(" ");
+		errorLabel = new JLabel(" ");
 		errorLabel.setFont(new Font(DIALOG, Font.BOLD, 14));
 		errorLabel.setName("errorLabel");
 		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
@@ -160,6 +162,11 @@ public class AlgorithmSwingView extends JFrame {
 
 	public void runAdded(Run run) {
 		listRunsModel.addElement(run);
+		errorLabel.setText(" ");
+	}
+
+	public void showAlgorithmError(String string, Algorithm algorithm) {
+		errorLabel.setText(string + " for algorithm: " + algorithm.getName());
 	}
 
 }

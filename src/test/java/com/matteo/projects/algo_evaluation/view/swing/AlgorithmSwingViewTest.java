@@ -113,4 +113,22 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		assertThat(listContents).containsExactly(run.toString());
 	}
 
+	@Test
+	@GUITest
+	public void testShowAlgorithmErrorShowsError() {
+		Algorithm algorithm = new Algorithm("1", "Unknown");
+		GuiActionRunner.execute(() -> algorithmSwingView.showAlgorithmError("Algorithm not found: Unknown", algorithm));
+		window.label("errorLabel").requireText("Algorithm not found: Unknown for algorithm: Unknown");
+	}
+
+	@Test
+	@GUITest
+	public void testRunAddedClearsErrorLabel() {
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.showAlgorithmError("error", new Algorithm("1", "test"));
+			algorithmSwingView.runAdded(new Run("1", "1", "1", 1));
+		});
+		window.label("errorLabel").requireText(" ");
+	}
+
 }
