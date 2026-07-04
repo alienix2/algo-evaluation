@@ -1,7 +1,5 @@
 package com.matteo.projects.algo_evaluation.view.swing;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +12,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JList;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
+
 import java.awt.Insets;
 import java.util.List;
 
@@ -24,6 +24,7 @@ import java.awt.Font;
 
 public class AlgorithmSwingView extends JFrame {
 
+	private static final String DIALOG = "Dialog";
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
@@ -32,27 +33,11 @@ public class AlgorithmSwingView extends JFrame {
 	private DefaultListModel<Run> listRunsModel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AlgorithmSwingView frame = new AlgorithmSwingView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public AlgorithmSwingView() {
 		setTitle("Sorting Algorithm evluation");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,12 +59,12 @@ public class AlgorithmSwingView extends JFrame {
 
 		listAlgorithmsModel = new DefaultListModel<>();
 		JList<Algorithm> algorithmList = new JList<>(listAlgorithmsModel);
-		algorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
+		algorithmList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		algorithmList.setName("algorithmList");
 		algorithmScrollPane.setViewportView(algorithmList);
 
 		JLabel lblAlgorithmList = new JLabel("Algorithm list");
-		lblAlgorithmList.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblAlgorithmList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		algorithmScrollPane.setColumnHeaderView(lblAlgorithmList);
 
 		JScrollPane datasetScrollPane = new JScrollPane();
@@ -92,12 +77,12 @@ public class AlgorithmSwingView extends JFrame {
 
 		listDatasetsModel = new DefaultListModel<>();
 		JList<Dataset> datasetList = new JList<>(listDatasetsModel);
-		datasetList.setFont(new Font("Dialog", Font.BOLD, 20));
+		datasetList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		datasetList.setName("datasetList");
 		datasetScrollPane.setViewportView(datasetList);
 
 		JLabel lblDatasetList = new JLabel("Dataset list");
-		lblDatasetList.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblDatasetList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		datasetScrollPane.setColumnHeaderView(lblDatasetList);
 
 		JScrollPane runScrollPane = new JScrollPane();
@@ -111,16 +96,16 @@ public class AlgorithmSwingView extends JFrame {
 
 		listRunsModel = new DefaultListModel<>();
 		JList<Run> runList = new JList<>(listRunsModel);
-		runList.setFont(new Font("Dialog", Font.BOLD, 20));
+		runList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		runList.setName("runList");
 		runScrollPane.setViewportView(runList);
 
 		JLabel lblRunList = new JLabel("Run list");
-		lblRunList.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblRunList.setFont(new Font(DIALOG, Font.BOLD, 20));
 		runScrollPane.setColumnHeaderView(lblRunList);
 
 		JButton runButton = new JButton("Run");
-		runButton.setFont(new Font("Dialog", Font.BOLD, 24));
+		runButton.setFont(new Font(DIALOG, Font.BOLD, 24));
 		runButton.setEnabled(false);
 		GridBagConstraints gbc_runButton = new GridBagConstraints();
 		gbc_runButton.insets = new Insets(0, 0, 0, 5);
@@ -129,7 +114,7 @@ public class AlgorithmSwingView extends JFrame {
 		contentPane.add(runButton, gbc_runButton);
 
 		JLabel errorLabel = new JLabel(" ");
-		errorLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		errorLabel.setFont(new Font(DIALOG, Font.BOLD, 14));
 		errorLabel.setName("errorLabel");
 		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
 		gbc_errorLabel.gridx = 1;

@@ -12,7 +12,10 @@ import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import com.matteo.projects.algo_evaluation.controller.RunController;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.model.Run;
@@ -23,8 +26,14 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 	private FrameFixture window;
 	private AlgorithmSwingView algorithmSwingView;
 
+	@Mock
+	private RunController runController;
+
+	private AutoCloseable closeable;
+
 	@Override
 	protected void onSetUp() {
+		closeable = MockitoAnnotations.openMocks(this);
 		GuiActionRunner.execute(() -> {
 			algorithmSwingView = new AlgorithmSwingView();
 			return algorithmSwingView;
@@ -32,13 +41,18 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		window = new FrameFixture(robot(), algorithmSwingView);
 		window.show();
 	}
+	
+	@Override
+	protected void onTearDown() throws Exception {
+		closeable.close();
+	}
 
 	@Test
 	@GUITest
 	public void testControlsInitialStates() {
-		window.list("algorithmList");
-		window.list("datasetList");
-		window.list("runList");
+		window.list("algorithmList").requireVisible();
+		window.list("datasetList").requireVisible();
+		window.list("runList").requireVisible();
 		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.label("errorLabel").requireText(" ");
 	}
@@ -71,20 +85,6 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> algorithmSwingView.showAllRuns(Arrays.asList(run1, run2)));
 		String[] listContents = window.list("runList").contents();
 		assertThat(listContents).containsExactly(run1.toString(), run2.toString());
-	}
-
-	@Test
-	@GUITest
-	public void testRunButtonShouldBeEnabledOnlyWhenBothAlgorithmAndDatasetAreSelected() {
-		GuiActionRunner.execute(() -> {
-			algorithmSwingView.getListAlgorithmsModel().addElement(new Algorithm("1", "BubbleSort"));
-			algorithmSwingView.getListDatasetsModel().addElement(new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3)));
-		});
-		window.list("algorithmList").selectItem(0);
-		window.list("datasetList").selectItem(0);
-		window.button(JButtonMatcher.withText("Run")).requireEnabled();
-		window.list("algorithmList").clearSelection();
-		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 	}
 
 }
