@@ -169,4 +169,8 @@ public class AlgorithmSwingView extends JFrame {
 		errorLabel.setText(string + " for algorithm: " + algorithm.getName());
 	}
 
+	public void showDatasetError(String string, Dataset dataset) {
+		errorLabel.setText(string + " for dataset: " + dataset.getName());
+	}
+
 }
