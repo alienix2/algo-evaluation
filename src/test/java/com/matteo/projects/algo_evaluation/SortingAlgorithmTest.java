@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import com.matteo.projects.algo_evaluation.algorithm.BubbleSort;
+import com.matteo.projects.algo_evaluation.algorithm.SortingAlgorithm;
+
 public class SortingAlgorithmTest {
 
 	@Test
