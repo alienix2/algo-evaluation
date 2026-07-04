@@ -194,7 +194,12 @@
 								com.matteo.projects.algo_evaluation.model.Dataset</param>
 							<param>
 								com.matteo.projects.algo_evaluation.model.Run</param>
+							<param>
+								com.matteo.projects.algo_evaluation.view.swing.*</param>
 						</excludedClasses>
+						<excludedTestClasses>
+							<param>com.matteo.projects.algo_evaluation.view.swing.AlgorithmSwingViewTest</param>
+						</excludedTestClasses>
 						<targetClasses>
 							<param>com.matteo.projects.algo_evaluation.*</param>
 						</targetClasses>
