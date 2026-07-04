@@ -104,4 +104,13 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		verify(runController).newRun(algo, dataset);
 	}
 
+	@Test
+	@GUITest
+	public void testRunAddedAddsRunToList() {
+		Run run = new Run("1", "1", "1", 1);
+		GuiActionRunner.execute(() -> algorithmSwingView.runAdded(run));
+		String[] listContents = window.list("runList").contents();
+		assertThat(listContents).containsExactly(run.toString());
+	}
+
 }

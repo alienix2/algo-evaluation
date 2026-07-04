@@ -39,10 +39,6 @@ public class AlgorithmSwingView extends JFrame {
 	 * Create the frame.
 	 */
 
-	public void setRunController(RunController runController) {
-		this.runController = runController;
-	}
-
 	public AlgorithmSwingView() {
 		setTitle("Sorting Algorithm evluation");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -156,6 +152,14 @@ public class AlgorithmSwingView extends JFrame {
 
 	public DefaultListModel<Dataset> getListDatasetsModel() {
 		return listDatasetsModel;
+	}
+	
+	public void setRunController(RunController runController) {
+		this.runController = runController;
+	}
+
+	public void runAdded(Run run) {
+		listRunsModel.addElement(run);
 	}
 
 }
