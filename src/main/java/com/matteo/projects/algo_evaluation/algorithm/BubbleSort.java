@@ -1,4 +1,4 @@
-package com.matteo.projects.algo_evaluation;
+package com.matteo.projects.algo_evaluation.algorithm;
 
 public class BubbleSort implements SortingAlgorithm {
 	@Override
