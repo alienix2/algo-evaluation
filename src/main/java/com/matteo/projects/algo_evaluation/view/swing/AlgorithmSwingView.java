@@ -4,9 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.matteo.projects.algo_evaluation.controller.RunController;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.model.Run;
+
+import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
 import java.awt.GridBagLayout;
 import javax.swing.JList;
@@ -22,19 +25,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class AlgorithmSwingView extends JFrame {
+public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 
 	private static final String DIALOG = "Dialog";
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	private JLabel errorLabel;
 
 	private DefaultListModel<Algorithm> listAlgorithmsModel;
 	private DefaultListModel<Dataset> listDatasetsModel;
 	private DefaultListModel<Run> listRunsModel;
 
+	private transient RunController runController;
+
 	/**
 	 * Create the frame.
 	 */
+
 	public AlgorithmSwingView() {
 		setTitle("Sorting Algorithm evluation");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -112,8 +120,11 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_runButton.gridx = 0;
 		gbc_runButton.gridy = 2;
 		contentPane.add(runButton, gbc_runButton);
+		
+		runButton.addActionListener(
+				e -> runController.newRun(algorithmList.getSelectedValue(), datasetList.getSelectedValue()));
 
-		JLabel errorLabel = new JLabel(" ");
+		errorLabel = new JLabel(" ");
 		errorLabel.setFont(new Font(DIALOG, Font.BOLD, 14));
 		errorLabel.setName("errorLabel");
 		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
@@ -145,6 +156,27 @@ public class AlgorithmSwingView extends JFrame {
 
 	public DefaultListModel<Dataset> getListDatasetsModel() {
 		return listDatasetsModel;
+	}
+	
+	public void setRunController(RunController runController) {
+		this.runController = runController;
+	}
+
+	public void runAdded(Run run) {
+		listRunsModel.addElement(run);
+		errorLabel.setText(" ");
+	}
+
+	public void showAlgorithmError(String string, Algorithm algorithm) {
+		errorLabel.setText(string + " for algorithm: " + algorithm.getName());
+	}
+
+	public void showDatasetError(String string, Dataset dataset) {
+		errorLabel.setText(string + " for dataset: " + dataset.getName());
+	}
+
+	public void showRunError(String string, Run run) {
+		errorLabel.setText(string + " for run: " + run.getId());
 	}
 
 }

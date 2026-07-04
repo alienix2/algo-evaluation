@@ -1,6 +1,7 @@
 package com.matteo.projects.algo_evaluation.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
@@ -41,7 +42,7 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		window = new FrameFixture(robot(), algorithmSwingView);
 		window.show();
 	}
-	
+
 	@Override
 	protected void onTearDown() throws Exception {
 		closeable.close();
@@ -85,6 +86,88 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> algorithmSwingView.showAllRuns(Arrays.asList(run1, run2)));
 		String[] listContents = window.list("runList").contents();
 		assertThat(listContents).containsExactly(run1.toString(), run2.toString());
+	}
+	
+	@Test
+	@GUITest
+	public void testRunButtonIsEnabledAndDisabled() {
+		Algorithm algo = new Algorithm("1", "BubbleSort");
+		Dataset dataset = new Dataset("1", "ds", Arrays.asList(1, 2, 3));
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.getListAlgorithmsModel().addElement(algo);
+			algorithmSwingView.getListDatasetsModel().addElement(dataset);
+		});
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireEnabled();
+		window.list("algorithmList").clearSelection();
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
+		window.list("datasetList").clearSelection();
+		window.list("algorithmList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
+		window.list("algorithmList").clearSelection();
+		window.list("datasetList").selectItem(0);
+		window.list("algorithmList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireEnabled();
+	}
+
+	@Test
+	@GUITest
+	public void testRunButtonClickCallsNewRun() {
+		Algorithm algo = new Algorithm("1", "Bubblesort");
+		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.setRunController(runController);
+			algorithmSwingView.getListAlgorithmsModel().addElement(algo);
+			algorithmSwingView.getListDatasetsModel().addElement(dataset);
+		});
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).click();
+		verify(runController).newRun(algo, dataset);
+	}
+
+	@Test
+	@GUITest
+	public void testRunAddedAddsRunToList() {
+		Run run = new Run("1", "1", "1", 1);
+		GuiActionRunner.execute(() -> algorithmSwingView.runAdded(run));
+		String[] listContents = window.list("runList").contents();
+		assertThat(listContents).containsExactly(run.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testShowAlgorithmErrorShowsError() {
+		Algorithm algorithm = new Algorithm("1", "Unknown");
+		GuiActionRunner.execute(() -> algorithmSwingView.showAlgorithmError("Algorithm not found: Unknown", algorithm));
+		window.label("errorLabel").requireText("Algorithm not found: Unknown for algorithm: Unknown");
+	}
+
+	@Test
+	@GUITest
+	public void testRunAddedClearsErrorLabel() {
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.showAlgorithmError("error", new Algorithm("1", "test"));
+			algorithmSwingView.runAdded(new Run("1", "1", "1", 1));
+		});
+		window.label("errorLabel").requireText(" ");
+	}
+
+	@Test
+	@GUITest
+	public void testShowDatasetErrorShowsError() {
+		Dataset dataset = new Dataset("1", "Unknown", Arrays.asList(1, 2, 3));
+		GuiActionRunner.execute(() -> algorithmSwingView.showDatasetError("Dataset not found: Unknown", dataset));
+		window.label("errorLabel").requireText("Dataset not found: Unknown for dataset: Unknown");
+	}
+
+	@Test
+	@GUITest
+	public void testShowRunErrorShowsError() {
+		Run run = new Run("1", "1", "1", 1);
+		GuiActionRunner.execute(() -> algorithmSwingView.showRunError("Run error", run));
+		window.label("errorLabel").requireText("Run error for run: " + run.getId());
 	}
 
 }
