@@ -87,7 +87,7 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		String[] listContents = window.list("runList").contents();
 		assertThat(listContents).containsExactly(run1.toString(), run2.toString());
 	}
-	
+
 	@Test
 	@GUITest
 	public void testRunButtonIsEnabledAndDisabled() {
@@ -97,16 +97,17 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 			algorithmSwingView.getListAlgorithmsModel().addElement(algo);
 			algorithmSwingView.getListDatasetsModel().addElement(dataset);
 		});
+
 		window.list("algorithmList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.list("datasetList").selectItem(0);
 		window.button(JButtonMatcher.withText("Run")).requireEnabled();
-		window.list("algorithmList").clearSelection();
-		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.list("datasetList").clearSelection();
-		window.list("algorithmList").selectItem(0);
 		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.list("algorithmList").clearSelection();
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
 		window.list("algorithmList").selectItem(0);
 		window.button(JButtonMatcher.withText("Run")).requireEnabled();
 	}
