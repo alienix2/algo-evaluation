@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
 
+import java.time.Clock;
 import java.util.Arrays;
 
 import org.junit.After;
@@ -40,6 +41,9 @@ public class RunControllerTest {
 
 	@Mock
 	private SortingAlgorithm sortingAlgorithm;
+	
+	@Mock
+	private Clock clock;
 
 	@Captor
 	private ArgumentCaptor<Run> runCaptor;
@@ -91,11 +95,12 @@ public class RunControllerTest {
 	public void testNewRunAlgorithmIsFound() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
 		Integer[] unsorted = new Integer[] { 3, 1, 2 };
-		Dataset dataset = new Dataset("2", "ds", Arrays.asList(unsorted));
+		Dataset dataset = new Dataset("2", "dataset2", Arrays.asList(unsorted));
 
 		when(sortingAlgorithm.sorted(unsorted)).thenReturn(new Integer[] { 1, 2, 3 });
 		when(registry.get("BubbleSort")).thenReturn(sortingAlgorithm);
-
+		when(clock.millis()).thenReturn(1000L, 1500L);
+		
 		runController.newRun(algorithm, dataset);
 
 		ArgumentCaptor<Run> captor = ArgumentCaptor.forClass(Run.class);
@@ -105,6 +110,7 @@ public class RunControllerTest {
 		Run saved = captor.getValue();
 		assertThat(saved.getAlgorithmId()).isEqualTo("1");
 		assertThat(saved.getDatasetId()).isEqualTo("2");
+		assertThat(saved.getExecutionTime()).isEqualTo(500L);
 	}
 
 	@Test

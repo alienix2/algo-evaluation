@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import java.time.Clock;
 import java.util.UUID;
 
 import com.matteo.projects.algo_evaluation.algorithm.SortingAlgorithm;
@@ -15,11 +16,14 @@ public class RunController {
 	private AlgoEvaluationView runView;
 	private RunRepository runRepository;
 	private SortingAlgorithmRegistry registry;
+	private Clock clock;
 
-	public RunController(AlgoEvaluationView runView, RunRepository runRepository, SortingAlgorithmRegistry registry) {
+	public RunController(AlgoEvaluationView runView, RunRepository runRepository, SortingAlgorithmRegistry registry,
+			Clock clock) {
 		this.runView = runView;
 		this.runRepository = runRepository;
 		this.registry = registry;
+		this.clock = clock;
 	}
 
 	public void allRuns() {
@@ -38,20 +42,20 @@ public class RunController {
 	}
 
 	public void newRun(Algorithm algorithm, Dataset dataset) {
-	     SortingAlgorithm sortingAlgorithm = registry.get(algorithm.getName());
-	     
-	     if (sortingAlgorithm == null) {
-	         runView.showAlgorithmError("Algorithm not found: " + algorithm.getName(), algorithm);
-	         return;
-	     }
-	     
-	     long start = System.currentTimeMillis();
-	     sortingAlgorithm.sorted(dataset.getIntegers().toArray(new Integer[0]));
-	     long executionTime = System.currentTimeMillis() - start;
-	     
-	     Run run = new Run(UUID.randomUUID().toString(), algorithm.getId(), dataset.getId(), executionTime);
-	     runRepository.save(run);
-	     runView.runAdded(run);
-	 }
-	
+		SortingAlgorithm sortingAlgorithm = registry.get(algorithm.getName());
+
+		if (sortingAlgorithm == null) {
+			runView.showAlgorithmError("Algorithm not found: " + algorithm.getName(), algorithm);
+			return;
+		}
+
+		long start = clock.millis();
+		sortingAlgorithm.sorted(dataset.getIntegers().toArray(new Integer[0]));
+		long executionTime = clock.millis() - start;
+
+		Run run = new Run(UUID.randomUUID().toString(), algorithm.getId(), dataset.getId(), executionTime);
+		runRepository.save(run);
+		runView.runAdded(run);
+	}
+
 }

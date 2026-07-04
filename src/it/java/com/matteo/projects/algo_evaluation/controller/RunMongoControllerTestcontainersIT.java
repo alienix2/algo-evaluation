@@ -3,6 +3,8 @@ package com.matteo.projects.algo_evaluation.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
+import java.time.Clock;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -34,6 +36,9 @@ public class RunMongoControllerTestcontainersIT {
 	@Mock
 	private AlgoEvaluationView runView;
 	
+	@Mock
+	private Clock clock;
+	
 	@Captor
 	private ArgumentCaptor<Run> runCaptor;
 
@@ -52,7 +57,7 @@ public class RunMongoControllerTestcontainersIT {
 		}
 		SortingAlgorithmRegistry registry = new SortingAlgorithmRegistry();
 		registry.register("BubbleSort", new BubbleSort());
-		runController = new RunController(runView, runRepository, registry);
+		runController = new RunController(runView, runRepository, registry, clock);
 	}
 
 	@After
@@ -78,7 +83,7 @@ public class RunMongoControllerTestcontainersIT {
 	@Test
 	public void testCreateNewRun() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
-		Dataset dataset = new Dataset("2", "ds", asList(3, 1, 2));
+		Dataset dataset = new Dataset("2", "dataset2", asList(3, 1, 2));
 		runController.newRun(algorithm, dataset);
 		verify(runView).runAdded(runCaptor.capture());
 		assertThat(runCaptor.getValue().getAlgorithmId()).isEqualTo("1");
