@@ -25,6 +25,7 @@
 		<testcontainers.version>1.21.4</testcontainers.version>
 		<failsafe.version>3.5.6</failsafe.version>
 		<build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
+		<assertjswing.version>3.17.1</assertjswing.version>
 		<sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<sonar.tests>
@@ -32,6 +33,13 @@
 		<sonar.junit.reportPaths>
 			${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
 		<sonar.coverage.exclusions>**/model/*.*</sonar.coverage.exclusions>
+		<sonar.issue.ignore.multicriteria>e11,e12</sonar.issue.ignore.multicriteria>
+		<sonar.issue.ignore.multicriteria.e11.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e11.ruleKey>
+		<sonar.issue.ignore.multicriteria.e11.resourceKey>
+			**/AlgorithmSwingView.java</sonar.issue.ignore.multicriteria.e11.resourceKey>
+		<sonar.issue.ignore.multicriteria.e12.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e12.ruleKey>
+		<sonar.issue.ignore.multicriteria.e12.resourceKey>
+			**/AlgorithmSwingViewTest.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
 	</properties>
 
 	<dependencies>
@@ -88,6 +96,13 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-swing-junit</artifactId>
+			<version>${assertjswing.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -148,6 +163,8 @@
 								<excludes>
 									<exclude>
 										com/matteo/projects/algo_evaluation/model/*</exclude>
+									<exclude>
+										com/matteo/projects/algo_evaluation/view/swing/*</exclude>
 								</excludes>
 								<rules>
 									<rule>
@@ -177,7 +194,12 @@
 								com.matteo.projects.algo_evaluation.model.Dataset</param>
 							<param>
 								com.matteo.projects.algo_evaluation.model.Run</param>
+							<param>
+								com.matteo.projects.algo_evaluation.view.swing.*</param>
 						</excludedClasses>
+						<excludedTestClasses>
+							<param>com.matteo.projects.algo_evaluation.view.swing.AlgorithmSwingViewTest</param>
+						</excludedTestClasses>
 						<targetClasses>
 							<param>com.matteo.projects.algo_evaluation.*</param>
 						</targetClasses>
