@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.matteo.projects.algo_evaluation.controller.RunController;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.model.Run;
@@ -32,9 +33,16 @@ public class AlgorithmSwingView extends JFrame {
 	private DefaultListModel<Dataset> listDatasetsModel;
 	private DefaultListModel<Run> listRunsModel;
 
+	private RunController runController;
+
 	/**
 	 * Create the frame.
 	 */
+
+	public void setRunController(RunController runController) {
+		this.runController = runController;
+	}
+
 	public AlgorithmSwingView() {
 		setTitle("Sorting Algorithm evluation");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -112,6 +120,9 @@ public class AlgorithmSwingView extends JFrame {
 		gbc_runButton.gridx = 0;
 		gbc_runButton.gridy = 2;
 		contentPane.add(runButton, gbc_runButton);
+		
+		runButton.addActionListener(
+				e -> runController.newRun(algorithmList.getSelectedValue(), datasetList.getSelectedValue()));
 
 		JLabel errorLabel = new JLabel(" ");
 		errorLabel.setFont(new Font(DIALOG, Font.BOLD, 14));

@@ -1,6 +1,7 @@
 package com.matteo.projects.algo_evaluation.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
@@ -41,7 +42,7 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		window = new FrameFixture(robot(), algorithmSwingView);
 		window.show();
 	}
-	
+
 	@Override
 	protected void onTearDown() throws Exception {
 		closeable.close();
@@ -85,6 +86,22 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> algorithmSwingView.showAllRuns(Arrays.asList(run1, run2)));
 		String[] listContents = window.list("runList").contents();
 		assertThat(listContents).containsExactly(run1.toString(), run2.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testRunButtonClickCallsNewRun() {
+		Algorithm algo = new Algorithm("1", "Bubblesort");
+		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.setRunController(runController);
+			algorithmSwingView.getListAlgorithmsModel().addElement(algo);
+			algorithmSwingView.getListDatasetsModel().addElement(dataset);
+		});
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).click();
+		verify(runController).newRun(algo, dataset);
 	}
 
 }
