@@ -9,6 +9,8 @@ import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.model.Run;
 
+import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
+
 import java.awt.GridBagLayout;
 import javax.swing.JList;
 import java.awt.GridBagConstraints;
@@ -23,7 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class AlgorithmSwingView extends JFrame {
+public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 
 	private static final String DIALOG = "Dialog";
 	private static final long serialVersionUID = 1L;
@@ -171,6 +173,10 @@ public class AlgorithmSwingView extends JFrame {
 
 	public void showDatasetError(String string, Dataset dataset) {
 		errorLabel.setText(string + " for dataset: " + dataset.getName());
+	}
+
+	public void showRunError(String string, Run run) {
+		errorLabel.setText(string + " for run: " + run.getId());
 	}
 
 }

@@ -130,13 +130,21 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		});
 		window.label("errorLabel").requireText(" ");
 	}
-	
+
 	@Test
 	@GUITest
 	public void testShowDatasetErrorShowsError() {
 		Dataset dataset = new Dataset("1", "Unknown", Arrays.asList(1, 2, 3));
 		GuiActionRunner.execute(() -> algorithmSwingView.showDatasetError("Dataset not found: Unknown", dataset));
 		window.label("errorLabel").requireText("Dataset not found: Unknown for dataset: Unknown");
+	}
+
+	@Test
+	@GUITest
+	public void testShowRunErrorShowsError() {
+		Run run = new Run("1", "1", "1", 1);
+		GuiActionRunner.execute(() -> algorithmSwingView.showRunError("Run error", run));
+		window.label("errorLabel").requireText("Run error for run: " + run.getId());
 	}
 
 }
