@@ -37,7 +37,7 @@ public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 	private DefaultListModel<Dataset> listDatasetsModel;
 	private DefaultListModel<Run> listRunsModel;
 
-	private RunController runController;
+	private transient RunController runController;
 
 	/**
 	 * Create the frame.
