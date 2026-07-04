@@ -164,7 +164,7 @@
 									<exclude>
 										com/matteo/projects/algo_evaluation/model/*</exclude>
 									<exclude>
-										com/matteo/projects/algo_evaluation/view/swing/*</exclude>
+										com/matteo/projects/algo_evaluation/view/swing/AlgorithmSwingApp.*</exclude>
 								</excludes>
 								<rules>
 									<rule>

@@ -87,6 +87,29 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		String[] listContents = window.list("runList").contents();
 		assertThat(listContents).containsExactly(run1.toString(), run2.toString());
 	}
+	
+	@Test
+	@GUITest
+	public void testRunButtonIsEnabledAndDisabled() {
+		Algorithm algo = new Algorithm("1", "BubbleSort");
+		Dataset dataset = new Dataset("1", "ds", Arrays.asList(1, 2, 3));
+		GuiActionRunner.execute(() -> {
+			algorithmSwingView.getListAlgorithmsModel().addElement(algo);
+			algorithmSwingView.getListDatasetsModel().addElement(dataset);
+		});
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireEnabled();
+		window.list("algorithmList").clearSelection();
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
+		window.list("datasetList").clearSelection();
+		window.list("algorithmList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireDisabled();
+		window.list("algorithmList").clearSelection();
+		window.list("datasetList").selectItem(0);
+		window.list("algorithmList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).requireEnabled();
+	}
 
 	@Test
 	@GUITest
