@@ -10,6 +10,7 @@ import com.matteo.projects.algo_evaluation.model.Run;
 
 public class AlgorithmPicocliView implements AlgoEvaluationView {
 
+	private static final String ERROR_PREFIX = "ERROR: ";
 	private PrintStream printStream;
 
 	public AlgorithmPicocliView(PrintStream printStream) {
@@ -43,17 +44,17 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 
 	@Override
 	public void showAlgorithmError(String message, Algorithm existing) {
-		printStream.println("ERROR: " + message);
+		printStream.println(ERROR_PREFIX + message);
 	}
 
 	@Override
 	public void showDatasetError(String message, Dataset existing) {
-		printStream.println("ERROR: " + message);
+		printStream.println(ERROR_PREFIX + message);
 	}
 
 	@Override
 	public void showRunError(String message, Run existing) {
-		printStream.println("ERROR: " + message);
+		printStream.println(ERROR_PREFIX + message);
 	}
 
 }
