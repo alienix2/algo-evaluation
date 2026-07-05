@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/alienix2/algo-evaluation/badge.svg)](https://coveralls.io/github/alienix2/algo-evaluation)
+[![Coverage Status](https://coveralls.io/repos/github/alienix2/algo-evaluation/badge.svg?branch=master)](https://coveralls.io/github/alienix2/algo-evaluation?branch=master)
 
 [![Java CI IT on master](https://github.com/alienix2/algo-evaluation/actions/workflows/merge-to-master.yml/badge.svg)](https://github.com/alienix2/algo-evaluation/actions/workflows/merge-to-master.yml)
 
