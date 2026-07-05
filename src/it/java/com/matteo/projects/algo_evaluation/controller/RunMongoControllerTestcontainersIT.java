@@ -111,5 +111,27 @@ public class RunMongoControllerTestcontainersIT {
 		assertThat(runCaptor.getValue().getAlgorithmId()).isEqualTo("1");
 		assertThat(runCaptor.getValue().getDatasetId()).isEqualTo("2");
 	}
+	
+	@Test
+	public void testNewRunShowsAlgorithmErrorAlgorithmNotInDatabase() {
+	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
+	    Dataset dataset = new Dataset("2", "dataset2", asList(3, 1, 2));
+	    datasetRepository.save(dataset);
+
+	    runController.newRun(algorithm, dataset);
+
+	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+	}
+	
+	@Test
+	public void testNewRunShowsDatasetErrorDatasetNotInDatabase() {
+	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
+	    Dataset dataset = new Dataset("2", "dataset2", asList(3, 1, 2));
+	    algorithmRepository.save(algorithm);
+
+	    runController.newRun(algorithm, dataset);
+
+	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+	}
 
 }

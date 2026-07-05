@@ -150,7 +150,7 @@ public class RunControllerTest {
 	}
 	
 	@Test
-	public void testNewRunShowsAlgorithmErrorAlgorithmNotInRegistry() {
+	public void testNewRunShowsAlgorithmErrorDatasetNotInDatabase() {
 	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
 	    Dataset dataset = new Dataset("2", "dataset", Arrays.asList(1, 2, 3));
 	    when(algorithmRepository.findById("1")).thenReturn(algorithm);
