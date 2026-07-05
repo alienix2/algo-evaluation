@@ -38,7 +38,8 @@ public class DatasetMongoControllerTestcontainersIT {
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
 		datasetRepository = new DatasetMongoRepository(
-				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))));
+				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))),
+				"algo_evaluation");
 		for (Dataset dataset : datasetRepository.findAll()) {
 			datasetRepository.delete(dataset);
 		}

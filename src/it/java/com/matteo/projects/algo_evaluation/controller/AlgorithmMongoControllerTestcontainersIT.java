@@ -37,7 +37,8 @@ public class AlgorithmMongoControllerTestcontainersIT {
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
 		algorithmRepository = new AlgorithmMongoRepository(
-				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))));
+				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))),
+				"algo_evaluation");
 		for (Algorithm algorithm : algorithmRepository.findAll()) {
 			algorithmRepository.delete(algorithm);
 		}

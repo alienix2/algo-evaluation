@@ -23,9 +23,9 @@ public class AlgorithmSwingApp {
 			try {
 				MongoClient mongoClient = new MongoClient("localhost", 27017);
 
-				AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient);
-				DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient);
-				RunMongoRepository runRepository = new RunMongoRepository(mongoClient);
+				AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, "algo_evaluation");
+				DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient, "algo_evaluation");
+				RunMongoRepository runRepository = new RunMongoRepository(mongoClient, "algo_evaluation");
 
 				SortingAlgorithmRegistry registry = new SortingAlgorithmRegistry();
 				registry.register("BubbleSort", new BubbleSort());

@@ -1,6 +1,5 @@
 package com.matteo.projects.algo_evaluation.repository.mongo;
 
-import static com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository.ALGO_EVALUATION_DB_NAME;
 import static com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository.RUN_COLLECTION_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,10 +42,10 @@ public class RunMongoRepositoryTest {
 	@Before
 	public void setup() {
 		mongoClient = new MongoClient(new ServerAddress(serverAddress));
-		MongoDatabase database = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME);
+		MongoDatabase database = mongoClient.getDatabase("algo_evaluation");
 		// Clear the database before each test
 		database.drop();
-		runMongoRepository = new RunMongoRepository(mongoClient);
+		runMongoRepository = new RunMongoRepository(mongoClient, "algo_evaluation");
 		runCollection = database.getCollection(RUN_COLLECTION_NAME);
 	}
 	

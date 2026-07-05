@@ -51,7 +51,8 @@ public class RunMongoControllerTestcontainersIT {
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
 		runRepository = new RunMongoRepository(
-				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))));
+				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))),
+				"algo_evaluation");
 		for (Run run : runRepository.findAll()) {
 			runRepository.delete(run);
 		}

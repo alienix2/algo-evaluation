@@ -16,12 +16,11 @@ public class RunMongoRepository implements RunRepository {
 	private static final String EXECUTION_TIME = "executionTime";
 	private static final String DATASET_ID = "datasetId";
 	private static final String ALGORITHM_ID = "algorithmId";
-	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String RUN_COLLECTION_NAME = "runs";
 	private MongoCollection<Document> runCollection;
 
-	public RunMongoRepository(MongoClient mongoClient) {
-		runCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(RUN_COLLECTION_NAME);
+	public RunMongoRepository(MongoClient mongoClient, String databaseName) {
+		runCollection = mongoClient.getDatabase(databaseName).getCollection(RUN_COLLECTION_NAME);
 	}
 
 	@Override
