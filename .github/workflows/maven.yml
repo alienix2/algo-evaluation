@@ -8,6 +8,7 @@ jobs:
   build:
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     runs-on: ubuntu-latest
 
     name: Build in Linux
@@ -28,12 +29,16 @@ jobs:
           ~/.sonar/cache
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml', '**/*.yml') }}
         restore-keys: ${{ runner.os }}-m2-
-    - name: Set Maven Additional Goals
+    - name: Set Maven Additional Options
+      run: |
+        echo "COVERALLS_PROFILE=-Pcoveralls" >> $GITHUB_ENV
+      if: ${{ env.COVERALLS_REPO_TOKEN }}
+    - name: Set Sonar Goal
       run: echo "SONARGOAL=sonar:sonar" >> $GITHUB_ENV
       if: ${{ env.SONAR_TOKEN }}
-    - name: Build with Maven and SonarCloud
+    - name: Build with Maven
       run: >
-        xvfb-run mvn verify $SONARGOAL
+        xvfb-run mvn verify $COVERALLS_PROFILE $SONARGOAL
         -Dsonar.organization=mattemoni
         -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.projectKey=mattemoni_algo-evaluation
