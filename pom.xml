@@ -176,6 +176,7 @@
 						<excludes>
 							<exclude>**/model/*.*</exclude>
 							<exclude>**/AlgorithmSwingApp.*</exclude>
+							<exclude>**/AlgorithmPicocliView.*</exclude>
 						</excludes>
 					</configuration>
 					<executions>
