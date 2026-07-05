@@ -2,6 +2,7 @@ package com.matteo.projects.algo_evaluation.view.swing;
 
 import java.awt.EventQueue;
 import java.time.Clock;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,22 +16,44 @@ import com.matteo.projects.algo_evaluation.repository.mongo.AlgorithmMongoReposi
 import com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository;
 import com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository;
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 
-public class AlgorithmSwingApp {
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+
+@Command(mixinStandardHelpOptions = true)
+public class AlgorithmSwingApp implements Callable<Void> {
+
+	@Option(names = { "--mongo-host" }, description = "MongoDB host address")
+	private String mongoHost = "localhost";
+
+	@Option(names = { "--mongo-port" }, description = "MongoDB host port")
+	private int mongoPort = 27017;
+
+	@Option(names = { "--db-name" }, description = "Database name")
+	private String databaseName = "algo_evaluation";
 
 	public static void main(String[] args) {
+		new CommandLine(new AlgorithmSwingApp()).execute(args);
+	}
+
+	@Override
+	public Void call() throws Exception {
 		EventQueue.invokeLater(() -> {
 			try {
-				MongoClient mongoClient = new MongoClient("localhost", 27017);
-
-				AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, "algo_evaluation");
-				DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient, "algo_evaluation");
-				RunMongoRepository runRepository = new RunMongoRepository(mongoClient, "algo_evaluation");
+				MongoClient mongoClient = new MongoClient(new ServerAddress(mongoHost, mongoPort));
+				
+				AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, databaseName);
+				DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient, databaseName);
+				RunMongoRepository runRepository = new RunMongoRepository(mongoClient, databaseName);
 
 				SortingAlgorithmRegistry registry = new SortingAlgorithmRegistry();
 				registry.register("BubbleSort", new BubbleSort());
 				registry.register("SelectionSort", new SelectionSort());
+
 				AlgorithmSwingView view = new AlgorithmSwingView();
+
 				RunController runController = new RunController(view, runRepository, registry,
 						Clock.systemDefaultZone());
 				view.setRunController(runController);
@@ -38,10 +61,12 @@ public class AlgorithmSwingApp {
 				new AlgorithmController(view, algorithmRepository).allAlgorithms();
 				new DatasetController(view, datasetRepository).allDatasets();
 				runController.allRuns();
+
 				view.setVisible(true);
 			} catch (Exception e) {
 				Logger.getLogger(AlgorithmSwingApp.class.getName()).log(Level.SEVERE, "Exception", e);
 			}
 		});
+		return null;
 	}
 }
