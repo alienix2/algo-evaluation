@@ -109,6 +109,7 @@ public class RunControllerTest {
 		when(registry.get("BubbleSort")).thenReturn(sortingAlgorithm);
 		when(clock.millis()).thenReturn(1000L, 1500L);
 		when(algorithmRepository.findById("1")).thenReturn(algorithm);
+		when(datasetRepository.findById("2")).thenReturn(dataset);
 		
 		runController.newRun(algorithm, dataset);
 
@@ -125,8 +126,9 @@ public class RunControllerTest {
 	@Test
 	public void testNewRunWhenAlgorithmIsNotFound() {
 		Algorithm algorithm = new Algorithm("1", "Unknown");
-		Dataset dataset = new Dataset("2", "BubbleSort", Arrays.asList(1, 2, 3));
+		Dataset dataset = new Dataset("2", "Dataset", Arrays.asList(1, 2, 3));
 		when(algorithmRepository.findById("1")).thenReturn(algorithm);
+		when(datasetRepository.findById("2")).thenReturn(dataset);
 		when(registry.get("Unknown")).thenReturn(null);
 
 		runController.newRun(algorithm, dataset);
@@ -144,6 +146,19 @@ public class RunControllerTest {
 	    runController.newRun(algorithm, dataset);
 
 	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+	    verifyNoMoreInteractions(ignoreStubs(runRepository));
+	}
+	
+	@Test
+	public void testNewRunShowsAlgorithmErrorAlgorithmNotInRegistry() {
+	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
+	    Dataset dataset = new Dataset("2", "dataset", Arrays.asList(1, 2, 3));
+	    when(algorithmRepository.findById("1")).thenReturn(algorithm);
+	    when(datasetRepository.findById("2")).thenReturn(null);
+
+	    runController.newRun(algorithm, dataset);
+
+	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
 	    verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
 }

@@ -53,6 +53,10 @@ public class RunController {
 			runView.showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
 			return;
 		}
+		if (datasetRepository.findById(dataset.getId()) == null) {
+			runView.showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+			return;
+		}
 		SortingAlgorithm sortingAlgorithm = registry.get(algorithm.getName());
 		if (sortingAlgorithm == null) {
 			runView.showAlgorithmError("Algorithm not found: " + algorithm.getName(), algorithm);
