@@ -61,15 +61,34 @@ public class AlgorithmSwingAppE2E extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("algorithmList").contents()).anySatisfy(e -> assertThat(e).contains("BubbleSort"));
 		assertThat(window.list("datasetList").contents()).anySatisfy(e -> assertThat(e).contains("Dataset"));
 	}
-	
+
 	@Test
 	@GUITest
 	public void testRunButtonSuccess() {
-	    window.list("algorithmList").selectItem(0);
-	    window.list("datasetList").selectItem(0);
-	    window.button(JButtonMatcher.withText("Run")).click();
-	    assertThat(window.list("runList").contents())
-	        .anySatisfy(e -> assertThat(e).contains("1", "1"));
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).click();
+		assertThat(window.list("runList").contents()).anySatisfy(e -> assertThat(e).contains("1", "1"));
+	}
+
+	@Test
+	@GUITest
+	public void testRunButtonShowsAlgorithmErrorWhenAlgorithmDeletedFromDatabase() {
+		mongoClient.getDatabase(DB_NAME).getCollection("algorithms").drop();
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).click();
+		assertThat(window.label("errorLabel").text()).isEqualTo("Algorithm not found in DB: BubbleSort for algorithm: BubbleSort");
+	}
+
+	@Test
+	@GUITest
+	public void testRunButtonShowsDatasetErrorWhenDatasetDeletedFromDatabase() {
+		mongoClient.getDatabase(DB_NAME).getCollection("datasets").drop();
+		window.list("algorithmList").selectItem(0);
+		window.list("datasetList").selectItem(0);
+		window.button(JButtonMatcher.withText("Run")).click();
+		assertThat(window.label("errorLabel").text()).isEqualTo("Dataset not found in DB: Dataset1 for dataset: Dataset1");
 	}
 
 	private void addTestAlgorithm(String id, String name) {
