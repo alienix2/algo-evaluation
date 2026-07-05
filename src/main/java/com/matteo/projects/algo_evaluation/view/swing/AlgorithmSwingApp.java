@@ -43,7 +43,7 @@ public class AlgorithmSwingApp implements Callable<Void> {
 		EventQueue.invokeLater(() -> {
 			try {
 				MongoClient mongoClient = new MongoClient(new ServerAddress(mongoHost, mongoPort));
-				
+
 				AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, databaseName);
 				DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient, databaseName);
 				RunMongoRepository runRepository = new RunMongoRepository(mongoClient, databaseName);
@@ -54,8 +54,8 @@ public class AlgorithmSwingApp implements Callable<Void> {
 
 				AlgorithmSwingView view = new AlgorithmSwingView();
 
-				RunController runController = new RunController(view, runRepository, registry,
-						Clock.systemDefaultZone());
+				RunController runController = new RunController(view, runRepository, algorithmRepository,
+						datasetRepository, registry, Clock.systemDefaultZone());
 				view.setRunController(runController);
 
 				new AlgorithmController(view, algorithmRepository).allAlgorithms();

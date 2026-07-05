@@ -25,6 +25,8 @@ import com.matteo.projects.algo_evaluation.algorithm.SortingAlgorithmRegistry;
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.model.Run;
+import com.matteo.projects.algo_evaluation.repository.AlgorithmRepository;
+import com.matteo.projects.algo_evaluation.repository.DatasetRepository;
 import com.matteo.projects.algo_evaluation.repository.RunRepository;
 import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
@@ -35,6 +37,12 @@ public class RunControllerTest {
 
 	@Mock
 	private RunRepository runRepository;
+	
+	@Mock
+	private AlgorithmRepository algorithmRepository;
+	
+	@Mock
+	private DatasetRepository datasetRepository;
 
 	@Mock
 	private SortingAlgorithmRegistry registry;
@@ -100,6 +108,8 @@ public class RunControllerTest {
 		when(sortingAlgorithm.sorted(unsorted)).thenReturn(new Integer[] { 1, 2, 3 });
 		when(registry.get("BubbleSort")).thenReturn(sortingAlgorithm);
 		when(clock.millis()).thenReturn(1000L, 1500L);
+		when(algorithmRepository.findById("1")).thenReturn(algorithm);
+		when(datasetRepository.findById("2")).thenReturn(dataset);
 		
 		runController.newRun(algorithm, dataset);
 
@@ -116,12 +126,39 @@ public class RunControllerTest {
 	@Test
 	public void testNewRunWhenAlgorithmIsNotFound() {
 		Algorithm algorithm = new Algorithm("1", "Unknown");
-		Dataset dataset = new Dataset("2", "BubbleSort", Arrays.asList(1, 2, 3));
+		Dataset dataset = new Dataset("2", "Dataset", Arrays.asList(1, 2, 3));
+		when(algorithmRepository.findById("1")).thenReturn(algorithm);
+		when(datasetRepository.findById("2")).thenReturn(dataset);
 		when(registry.get("Unknown")).thenReturn(null);
 
 		runController.newRun(algorithm, dataset);
 
 		verify(runView).showAlgorithmError("Algorithm not found: Unknown", algorithm);
 		verifyNoMoreInteractions(ignoreStubs(runRepository));
+	}
+	
+	@Test
+	public void testNewRunShowsAlgorithmErrorAlgorithmNotInDatabase() {
+	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
+	    Dataset dataset = new Dataset("2", "dataset", Arrays.asList(1, 2, 3));
+	    when(algorithmRepository.findById("1")).thenReturn(null);
+
+	    runController.newRun(algorithm, dataset);
+
+	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+	    verifyNoMoreInteractions(ignoreStubs(runRepository));
+	}
+	
+	@Test
+	public void testNewRunShowsAlgorithmErrorDatasetNotInDatabase() {
+	    Algorithm algorithm = new Algorithm("1", "BubbleSort");
+	    Dataset dataset = new Dataset("2", "dataset", Arrays.asList(1, 2, 3));
+	    when(algorithmRepository.findById("1")).thenReturn(algorithm);
+	    when(datasetRepository.findById("2")).thenReturn(null);
+
+	    runController.newRun(algorithm, dataset);
+
+	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+	    verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
 }
