@@ -30,8 +30,8 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 
 	@Override
 	public void showAllDatasets(List<Dataset> asList) {
-		// TODO Auto-generated method stub
-
+		printStream.println("ID - Name");
+		asList.forEach(dataset -> printStream.println(dataset.getId() + " - " + dataset.getName()));
 	}
 
 	@Override
