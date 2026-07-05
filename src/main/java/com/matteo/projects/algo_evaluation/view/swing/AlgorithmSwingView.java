@@ -139,15 +139,15 @@ public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 	}
 
 	public void showAllAlgorithms(List<Algorithm> algorithms) {
-		algorithms.stream().forEach(listAlgorithmsModel::addElement);
+		algorithms.forEach(listAlgorithmsModel::addElement);
 	}
 
 	public void showAllDatasets(List<Dataset> datasets) {
-		datasets.stream().forEach(listDatasetsModel::addElement);
+		datasets.forEach(listDatasetsModel::addElement);
 	}
 
 	public void showAllRuns(List<Run> runs) {
-		runs.stream().forEach(listRunsModel::addElement);
+		runs.forEach(listRunsModel::addElement);
 	}
 
 	public DefaultListModel<Algorithm> getListAlgorithmsModel() {
