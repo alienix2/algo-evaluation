@@ -22,6 +22,7 @@
 		<mockito.version>5.11.0</mockito.version>
 		<jacoco.version>0.8.14</jacoco.version>
 		<pitest.version>1.15.3</pitest.version>
+		<coveralls-maven-plugin.version>5.1.0</coveralls-maven-plugin.version>
 		<testcontainers.version>1.21.4</testcontainers.version>
 		<failsafe.version>3.5.6</failsafe.version>
 		<build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
@@ -171,6 +172,12 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>${jacoco.version}</version>
+					<configuration>
+						<excludes>
+							<exclude>**/model/*.*</exclude>
+							<exclude>**/AlgorithmSwingApp.*</exclude>
+						</excludes>
+					</configuration>
 					<executions>
 						<execution>
 							<goals>
@@ -184,12 +191,6 @@
 								<goal>check</goal>
 							</goals>
 							<configuration>
-								<excludes>
-									<exclude>
-										com/matteo/projects/algo_evaluation/model/*</exclude>
-									<exclude>
-										com/matteo/projects/algo_evaluation/view/swing/AlgorithmSwingApp.*</exclude>
-								</excludes>
 								<rules>
 									<rule>
 										<element>PACKAGE</element>
@@ -236,6 +237,14 @@
 						<mutationThreshold>100</mutationThreshold>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>com.github.hazendaz.maven</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>${coveralls-maven-plugin.version}</version>
+					<configuration>
+						<repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -278,6 +287,29 @@
 							<execution>
 								<goals>
 									<goal>mutationCoverage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>coveralls</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>com.github.hazendaz.maven</groupId>
+						<artifactId>coveralls-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>report</goal>
 								</goals>
 							</execution>
 						</executions>
