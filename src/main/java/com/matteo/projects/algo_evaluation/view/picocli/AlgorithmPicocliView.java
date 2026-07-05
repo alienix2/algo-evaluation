@@ -50,8 +50,7 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 
 	@Override
 	public void runAdded(Run run) {
-		// TODO Auto-generated method stub
-
+		printStream.println("Run added: " + run.getId());
 	}
 
 	@Override

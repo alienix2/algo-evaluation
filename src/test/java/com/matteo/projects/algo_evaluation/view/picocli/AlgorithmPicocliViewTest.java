@@ -45,4 +45,11 @@ public class AlgorithmPicocliViewTest {
 		assertThat(outputStream.toString()).contains("ID - AlgorithmId - DatasetId - Execution Time (ms)")
 				.contains("1 - 1 - 1 - 100");
 	}
+
+	@Test
+	public void testRunAdded() {
+		Run run = new Run("1", "1", "1", 100);
+		view.runAdded(run);
+		assertThat(outputStream.toString()).contains("Run added: 1");
+	}
 }
