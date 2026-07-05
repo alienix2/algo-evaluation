@@ -33,13 +33,15 @@
 		<sonar.junit.reportPaths>
 			${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
 		<sonar.coverage.exclusions>**/model/*.*, **/AlgorithmSwingApp.*</sonar.coverage.exclusions>
-		<sonar.issue.ignore.multicriteria>e11,e12</sonar.issue.ignore.multicriteria>
+		<sonar.issue.ignore.multicriteria>e11,e12,e13</sonar.issue.ignore.multicriteria>
 		<sonar.issue.ignore.multicriteria.e11.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e11.ruleKey>
 		<sonar.issue.ignore.multicriteria.e11.resourceKey>
 			**/AlgorithmSwingView.java</sonar.issue.ignore.multicriteria.e11.resourceKey>
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>
 			**/AlgorithmSwingViewTest.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
+		<sonar.issue.ignore.multicriteria.e13.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e13.ruleKey>
+		<sonar.issue.ignore.multicriteria.e13.resourceKey>**/*E2E.java</sonar.issue.ignore.multicriteria.e13.resourceKey>
 	</properties>
 
 	<dependencies>
@@ -222,6 +224,8 @@
 						<excludedTestClasses>
 							<param>
 								com.matteo.projects.algo_evaluation.view.swing.AlgorithmSwingViewTest</param>
+							<param>
+								com.matteo.projects.algo_evaluation.view.swing.AlgorithmSwingAppE2E</param>
 						</excludedTestClasses>
 						<targetClasses>
 							<param>com.matteo.projects.algo_evaluation.*</param>
