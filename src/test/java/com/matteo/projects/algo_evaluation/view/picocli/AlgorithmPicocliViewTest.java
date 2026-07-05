@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.model.Dataset;
+import com.matteo.projects.algo_evaluation.model.Run;
 
 public class AlgorithmPicocliViewTest {
 
@@ -29,11 +30,19 @@ public class AlgorithmPicocliViewTest {
 		view.showAllAlgorithms(Arrays.asList(algorithm));
 		assertThat(outputStream.toString()).contains("ID - Name").contains("1 - BubbleSort");
 	}
-	
+
 	@Test
 	public void testShowAllDatasets() {
 		Dataset dataset = new Dataset("1", "dataset1", Arrays.asList(1, 2, 3));
 		view.showAllDatasets(Arrays.asList(dataset));
-		assertThat(outputStream.toString()).contains("ID - Name").contains("1 - dataset");
+		assertThat(outputStream.toString()).contains("ID - Name - Integers").contains("1 - dataset1 - [1, 2, 3]");
+	}
+
+	@Test
+	public void testShowAllRuns() {
+		Run run = new Run("1", "1", "1", 100);
+		view.showAllRuns(Arrays.asList(run));
+		assertThat(outputStream.toString()).contains("ID - AlgorithmId - DatasetId - Execution Time (ms)")
+				.contains("1 - 1 - 1 - 100");
 	}
 }

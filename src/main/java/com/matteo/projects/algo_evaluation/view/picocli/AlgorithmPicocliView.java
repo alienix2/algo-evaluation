@@ -29,9 +29,10 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 	}
 
 	@Override
-	public void showAllDatasets(List<Dataset> asList) {
-		printStream.println("ID - Name");
-		asList.forEach(dataset -> printStream.println(dataset.getId() + " - " + dataset.getName()));
+	public void showAllDatasets(List<Dataset> datasets) {
+		printStream.println("ID - Name - Integers");
+		datasets.forEach(dataset -> printStream
+				.println(dataset.getId() + " - " + dataset.getName() + " - " + dataset.getIntegers()));
 	}
 
 	@Override
@@ -41,9 +42,10 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 	}
 
 	@Override
-	public void showAllRuns(List<Run> asList) {
-		// TODO Auto-generated method stub
-
+	public void showAllRuns(List<Run> runs) {
+		printStream.println("ID - AlgorithmId - DatasetId - Execution Time (ms)");
+		runs.forEach(run -> printStream.println(run.getId() + " - " + run.getAlgorithmId() + " - " + run.getDatasetId()
+				+ " - " + run.getExecutionTime()));
 	}
 
 	@Override
