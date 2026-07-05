@@ -52,4 +52,22 @@ public class AlgorithmPicocliViewTest {
 		view.runAdded(run);
 		assertThat(outputStream.toString()).contains("Run added: 1");
 	}
+
+	@Test
+	public void testShowAlgorithmError() {
+		view.showAlgorithmError("Algorithm not found", null);
+		assertThat(outputStream.toString()).contains("ERROR: Algorithm not found");
+	}
+
+	@Test
+	public void testShowDatasetError() {
+		view.showDatasetError("Dataset not found", null);
+		assertThat(outputStream.toString()).contains("ERROR: Dataset not found");
+	}
+
+	@Test
+	public void testShowRunError() {
+		view.showRunError("Run not found", null);
+		assertThat(outputStream.toString()).contains("ERROR: Run not found");
+	}
 }

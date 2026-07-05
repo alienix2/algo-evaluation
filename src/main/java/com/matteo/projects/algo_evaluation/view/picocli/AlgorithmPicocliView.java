@@ -23,22 +23,10 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 	}
 
 	@Override
-	public void showAlgorithmError(String string, Algorithm existing) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void showAllDatasets(List<Dataset> datasets) {
 		printStream.println("ID - Name - Integers");
 		datasets.forEach(dataset -> printStream
 				.println(dataset.getId() + " - " + dataset.getName() + " - " + dataset.getIntegers()));
-	}
-
-	@Override
-	public void showDatasetError(String string, Dataset existing) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -54,9 +42,18 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 	}
 
 	@Override
-	public void showRunError(String string, Run existing) {
-		// TODO Auto-generated method stub
+	public void showAlgorithmError(String message, Algorithm existing) {
+		printStream.println("ERROR: " + message);
+	}
 
+	@Override
+	public void showDatasetError(String message, Dataset existing) {
+		printStream.println("ERROR: " + message);
+	}
+
+	@Override
+	public void showRunError(String message, Run existing) {
+		printStream.println("ERROR: " + message);
 	}
 
 }
