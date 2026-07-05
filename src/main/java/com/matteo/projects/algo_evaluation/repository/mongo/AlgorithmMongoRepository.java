@@ -14,12 +14,11 @@ import com.mongodb.client.MongoCollection;
 
 public class AlgorithmMongoRepository implements AlgorithmRepository {
 
-	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String ALGORITHM_COLLECTION_NAME = "algorithms";
 	private MongoCollection<Document> algorithmCollection;
 
-	public AlgorithmMongoRepository(MongoClient mongoClient) {
-		algorithmCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(ALGORITHM_COLLECTION_NAME);
+	public AlgorithmMongoRepository(MongoClient mongoClient, String databaseName) {
+		algorithmCollection = mongoClient.getDatabase(databaseName).getCollection(ALGORITHM_COLLECTION_NAME);
 	}
 
 	@Override

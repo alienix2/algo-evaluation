@@ -13,13 +13,12 @@ import com.mongodb.client.MongoCollection;
 
 public class DatasetMongoRepository implements DatasetRepository {
 
-	public static final String ALGO_EVALUATION_DB_NAME = "algo_evaluation";
 	public static final String DATASET_COLLECTION_NAME = "datasets";
 	public static final String INTEGER_LIST_FIELD_NAME = "integers";
 	private MongoCollection<Document> datasetCollection;
 
-	public DatasetMongoRepository(MongoClient mongoClient) {
-		datasetCollection = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME).getCollection(DATASET_COLLECTION_NAME);
+	public DatasetMongoRepository(MongoClient mongoClient, String databaseName) {
+		datasetCollection = mongoClient.getDatabase(databaseName).getCollection(DATASET_COLLECTION_NAME);
 	}
 
 	@Override

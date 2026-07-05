@@ -3,7 +3,6 @@ package com.matteo.projects.algo_evaluation.repository.mongo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static com.matteo.projects.algo_evaluation.repository.mongo.AlgorithmMongoRepository.ALGORITHM_COLLECTION_NAME;
-import static com.matteo.projects.algo_evaluation.repository.mongo.AlgorithmMongoRepository.ALGO_EVALUATION_DB_NAME;
 
 import java.net.InetSocketAddress;
 
@@ -47,10 +46,10 @@ public class AlgorithmMongoRepositoryTest {
 	@Before
 	public void setup() {
 		mongoClient = new MongoClient(new ServerAddress(serverAddress));
-		MongoDatabase database = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME);
+		MongoDatabase database = mongoClient.getDatabase("algo_evaluation");
 		// Clear the database before each test
 		database.drop();
-		algorithmRepository = new AlgorithmMongoRepository(mongoClient);
+		algorithmRepository = new AlgorithmMongoRepository(mongoClient, "algo_evaluation");
 		algorithmCollection = database.getCollection(ALGORITHM_COLLECTION_NAME);
 	}
 

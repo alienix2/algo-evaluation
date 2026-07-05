@@ -5,7 +5,6 @@ import java.util.List;
 
 import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.DATASET_COLLECTION_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository.ALGO_EVALUATION_DB_NAME;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,10 +44,10 @@ public class DatasetMongoRepositoryTest {
 	@Before
 	public void setup() {
 		mongoClient = new MongoClient(new ServerAddress(serverAddress));
-		MongoDatabase database = mongoClient.getDatabase(ALGO_EVALUATION_DB_NAME);
+		MongoDatabase database = mongoClient.getDatabase("algo_evaluation");
 		// Clear the database before each test
 		database.drop();
-		datasetRepository = new DatasetMongoRepository(mongoClient);
+		datasetRepository = new DatasetMongoRepository(mongoClient, "algo_evaluation");
 		datasetCollection = database.getCollection(DATASET_COLLECTION_NAME);
 	}
 	
