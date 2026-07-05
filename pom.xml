@@ -22,7 +22,7 @@
 		<mockito.version>5.11.0</mockito.version>
 		<jacoco.version>0.8.14</jacoco.version>
 		<pitest.version>1.15.3</pitest.version>
-		<coveralls-maven-plugin.version>4.5.0-M3</coveralls-maven-plugin.version>
+		<coveralls-maven-plugin.version>5.1.0</coveralls-maven-plugin.version>
 		<testcontainers.version>1.21.4</testcontainers.version>
 		<failsafe.version>3.5.6</failsafe.version>
 		<build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
