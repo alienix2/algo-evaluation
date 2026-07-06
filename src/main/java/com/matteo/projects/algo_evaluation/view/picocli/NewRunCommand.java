@@ -36,6 +36,7 @@ public class NewRunCommand implements Callable<Void>{
         Algorithm algorithm = algorithmController.findById(algorithmId);
         Dataset dataset = datasetController.findById(datasetId);
         runController.newRun(algorithm, dataset);
+        runController.allRuns();
         return null;
     }
 
