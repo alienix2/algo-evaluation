@@ -1,6 +1,7 @@
 package com.matteo.projects.algo_evaluation.view.picocli;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,16 +24,19 @@ public class ListRunsCommandTest {
 	@Before
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
+		when(mockApp.getRunController()).thenReturn(runController);
 	}
 
 	@After
 	public void releaseMocks() throws Exception {
 		closeable.close();
+		when(mockApp.getRunController()).thenReturn(runController);
 	}
 
 	@Test
 	public void testCallShowsAllRuns() {
-		ListRunsCommand cmd = new ListRunsCommand(runController);
+		ListRunsCommand cmd = new ListRunsCommand();
+		cmd.parent = mockApp;
 		cmd.call();
 		verify(runController).allRuns();
 	}

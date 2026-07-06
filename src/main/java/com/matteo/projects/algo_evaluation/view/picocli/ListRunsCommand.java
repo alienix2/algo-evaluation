@@ -2,22 +2,18 @@ package com.matteo.projects.algo_evaluation.view.picocli;
 
 import java.util.concurrent.Callable;
 
-import com.matteo.projects.algo_evaluation.controller.RunController;
-
 import picocli.CommandLine.Command;
+import picocli.CommandLine.ParentCommand;
 
 @Command(name = "list-runs")
 public class ListRunsCommand implements Callable<Void> {
 	
-	private final RunController runController;
-	
-	public ListRunsCommand(RunController runController) {
-		this.runController = runController;
-	}
+	@ParentCommand
+	AlgorithmPicocliApp parent;
 
 	@Override
 	public Void call() {
-		runController.allRuns();
+		parent.getRunController().allRuns();
 		return null;
 	}
 
