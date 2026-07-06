@@ -24,6 +24,7 @@ public class ListDatasetsCommandTest {
 	@Before
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
+		when(mockApp.getDatasetController()).thenReturn(datasetController);
 	}
 
 	@After
