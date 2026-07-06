@@ -1,6 +1,7 @@
 package com.matteo.projects.algo_evaluation.view.picocli;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,9 @@ public class ListDatasetsCommandTest {
 
 	@Mock
 	private DatasetController datasetController;
+	
+	@Mock
+    AlgorithmPicocliApp mockApp;
 
 	private AutoCloseable closeable;
 
@@ -25,11 +29,13 @@ public class ListDatasetsCommandTest {
 	@After
 	public void releaseMocks() throws Exception {
 		closeable.close();
+		when(mockApp.getDatasetController()).thenReturn(datasetController);
 	}
 
 	@Test
 	public void testCallShowsAllDatasets() {
-		ListDatasetsCommand cmd = new ListDatasetsCommand(datasetController);
+		ListDatasetsCommand cmd = new ListDatasetsCommand();
+		cmd.parent = mockApp;
 		cmd.call();
 		verify(datasetController).allDatasets();
 	}
