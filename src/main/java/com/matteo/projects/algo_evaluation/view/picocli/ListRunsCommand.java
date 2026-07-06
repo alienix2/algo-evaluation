@@ -10,7 +10,7 @@ import picocli.CommandLine.Command;
 public class ListRunsCommand implements Callable<Void> {
 	
 	private final RunController runController;
-
+	
 	public ListRunsCommand(RunController runController) {
 		this.runController = runController;
 	}

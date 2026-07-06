@@ -13,7 +13,10 @@ import com.matteo.projects.algo_evaluation.controller.RunController;
 public class ListRunsCommandTest {
 
 	@Mock
-	private RunController runController;
+	AlgorithmPicocliApp mockApp;
+
+	@Mock
+	RunController runController;
 
 	private AutoCloseable closeable;
 

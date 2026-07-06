@@ -1,7 +1,7 @@
 package com.matteo.projects.algo_evaluation.view.picocli;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,13 +15,13 @@ import com.matteo.projects.algo_evaluation.model.Run;
 
 public class AlgorithmPicocliViewTest {
 
-	private ByteArrayOutputStream outputStream;
+	private StringWriter outputStream;
 	private AlgorithmPicocliView view;
 
 	@Before
 	public void setup() {
-		outputStream = new ByteArrayOutputStream();
-		view = new AlgorithmPicocliView(new PrintStream(outputStream));
+		outputStream = new StringWriter();
+		view = new AlgorithmPicocliView(new PrintWriter(outputStream));
 	}
 
 	@Test
