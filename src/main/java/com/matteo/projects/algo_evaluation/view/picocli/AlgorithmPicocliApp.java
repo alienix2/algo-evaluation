@@ -48,19 +48,12 @@ public class AlgorithmPicocliApp {
 	}
 
 	private int executionStrategy(ParseResult parseResult) {
-		if (isHelpRequested(parseResult)) {
-			return new CommandLine.RunLast().execute(parseResult);
+		Integer helpExitCode = CommandLine.executeHelpRequest(parseResult);
+		if (helpExitCode != null) {
+			return helpExitCode;
 		}
 		init();
 		return new CommandLine.RunLast().execute(parseResult);
-	}
-
-	private boolean isHelpRequested(ParseResult parseResult) {
-		if (parseResult.commandSpec().commandLine().isUsageHelpRequested()
-				|| parseResult.commandSpec().commandLine().isVersionHelpRequested()) {
-			return true;
-		}
-		return parseResult.hasSubcommand() && isHelpRequested(parseResult.subcommand());
 	}
 
 	private void init() {
@@ -83,6 +76,7 @@ public class AlgorithmPicocliApp {
 
 	public static void main(String[] args) {
 		AlgorithmPicocliApp app = new AlgorithmPicocliApp();
-		new CommandLine(app).setExecutionStrategy(app::executionStrategy).execute(args);
+		int exitCode = new CommandLine(app).setExecutionStrategy(app::executionStrategy).execute(args);
+		System.exit(exitCode);
 	}
 }
