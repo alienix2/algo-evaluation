@@ -74,9 +74,12 @@ public class AlgorithmPicocliApp {
 		datasetController = new DatasetController(algorithmPicocliView, datasetRepository);
 	}
 
+	public CommandLine createCommandLine() {
+		return new CommandLine(this).setExecutionStrategy(this::executionStrategy);
+	}
+
 	public static void main(String[] args) {
 		AlgorithmPicocliApp app = new AlgorithmPicocliApp();
-		int exitCode = new CommandLine(app).setExecutionStrategy(app::executionStrategy).execute(args);
-		System.exit(exitCode);
+		System.exit(app.createCommandLine().execute(args));
 	}
 }
