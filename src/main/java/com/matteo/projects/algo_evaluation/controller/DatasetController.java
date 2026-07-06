@@ -17,4 +17,8 @@ public class DatasetController {
 		datasetView.showAllDatasets(datasetRepository.findAll());
 	}
 
+	public Object findById(String string) {
+		return datasetRepository.findById(string);
+	}
+
 }

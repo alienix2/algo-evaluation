@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
@@ -38,8 +39,7 @@ public class DatasetMongoControllerTestcontainersIT {
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
 		datasetRepository = new DatasetMongoRepository(
-				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))),
-				"algo_evaluation");
+				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))), "algo_evaluation");
 		for (Dataset dataset : datasetRepository.findAll()) {
 			datasetRepository.delete(dataset);
 		}
@@ -57,6 +57,13 @@ public class DatasetMongoControllerTestcontainersIT {
 		datasetRepository.save(dataset);
 		datasetController.allDatasets();
 		verify(datasetView).showAllDatasets(asList(dataset));
+	}
+
+	@Test
+	public void testFindById() {
+		Dataset dataset = new Dataset("1", "Dataset1", List.of(1, 2, 3));
+		datasetRepository.save(dataset);
+		assertThat(datasetController.findById("1")).isEqualTo(dataset);
 	}
 
 }

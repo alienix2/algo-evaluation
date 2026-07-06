@@ -17,4 +17,8 @@ public class AlgorithmController {
 		algorithmView.showAllAlgorithms(algorithmRepository.findAll());
 	}
 
+	public Object findById(String string) {
+		return algorithmRepository.findById(string);
+	}
+
 }

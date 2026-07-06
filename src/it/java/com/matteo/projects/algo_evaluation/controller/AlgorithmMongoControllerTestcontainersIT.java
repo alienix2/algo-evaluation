@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
@@ -37,8 +38,7 @@ public class AlgorithmMongoControllerTestcontainersIT {
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
 		algorithmRepository = new AlgorithmMongoRepository(
-				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))),
-				"algo_evaluation");
+				new MongoClient(new ServerAddress(mongo.getHost(), mongo.getMappedPort(27017))), "algo_evaluation");
 		for (Algorithm algorithm : algorithmRepository.findAll()) {
 			algorithmRepository.delete(algorithm);
 		}
@@ -49,13 +49,20 @@ public class AlgorithmMongoControllerTestcontainersIT {
 	public void releaseMocks() throws Exception {
 		closeable.close();
 	}
-	
+
 	@Test
 	public void testAllAlgorithms() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
 		algorithmRepository.save(algorithm);
 		algorithmController.allAlgorithms();
 		verify(algorithmView).showAllAlgorithms(Arrays.asList(algorithm));
+	}
+
+	@Test
+	public void testFindById() {
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		algorithmRepository.save(algorithm);
+		assertThat(algorithmController.findById("1")).isEqualTo(algorithm);
 	}
 
 }

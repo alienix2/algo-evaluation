@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import java.util.Arrays;
 
@@ -42,5 +43,12 @@ public class AlgorithmControllerTest {
 		algorithmController.allAlgorithms();
 		verify(algorithmView).showAllAlgorithms(Arrays.asList(new Algorithm("1", "BubbleSort")));
 	}
-	
+
+	@Test
+	public void testFindById() {
+		Algorithm algorithm = new Algorithm("1", "BubbleSort");
+		when(algorithmRepository.findById("1")).thenReturn(algorithm);
+		assertThat(algorithmController.findById("1")).isEqualTo(algorithm);
+	}
+
 }

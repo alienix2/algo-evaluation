@@ -46,5 +46,12 @@ public class DatasetControllerTest {
 		datasetController.allDatasets();
 		verify(datasetView).showAllDatasets(Arrays.asList(dataset));
 	}
+	
+	@Test
+	public void testFindById() {
+		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
+		when(datasetRepository.findById("1")).thenReturn(dataset);
+		assert(datasetController.findById("1").equals(dataset));
+	}
 
 }
