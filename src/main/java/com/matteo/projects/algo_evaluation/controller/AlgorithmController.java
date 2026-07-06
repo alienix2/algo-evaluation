@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import com.matteo.projects.algo_evaluation.model.Algorithm;
 import com.matteo.projects.algo_evaluation.repository.AlgorithmRepository;
 import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
@@ -17,7 +18,7 @@ public class AlgorithmController {
 		algorithmView.showAllAlgorithms(algorithmRepository.findAll());
 	}
 
-	public Object findById(String string) {
+	public Algorithm findById(String string) {
 		return algorithmRepository.findById(string);
 	}
 

@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import com.matteo.projects.algo_evaluation.model.Dataset;
 import com.matteo.projects.algo_evaluation.repository.DatasetRepository;
 import com.matteo.projects.algo_evaluation.view.AlgoEvaluationView;
 
@@ -17,7 +18,7 @@ public class DatasetController {
 		datasetView.showAllDatasets(datasetRepository.findAll());
 	}
 
-	public Object findById(String string) {
+	public Dataset findById(String string) {
 		return datasetRepository.findById(string);
 	}
 
