@@ -29,12 +29,17 @@ public class NewRunCommandTest {
 	private DatasetController datasetController;
 	@Mock
 	private RunController runController;
+	@Mock
+	private AlgorithmPicocliApp mockApp;
 
 	private AutoCloseable closeable;
 
 	@Before
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
+		when(mockApp.getAlgorithmController()).thenReturn(algorithmController);
+		when(mockApp.getDatasetController()).thenReturn(datasetController);
+		when(mockApp.getRunController()).thenReturn(runController);
 	}
 
 	@After
@@ -49,7 +54,8 @@ public class NewRunCommandTest {
 		when(algorithmController.findById("1")).thenReturn(algorithm);
 		when(datasetController.findById("2")).thenReturn(dataset);
 
-		NewRunCommand cmd = new NewRunCommand(algorithmController, datasetController, runController);
+		NewRunCommand cmd = new NewRunCommand();
+		cmd.parent = mockApp;
 		new CommandLine(cmd).execute("--algorithm-id=1", "--dataset-id=2");
 
 		verify(runController).newRun(algorithm, dataset);
@@ -62,7 +68,8 @@ public class NewRunCommandTest {
 		when(algorithmController.findById("1")).thenReturn(algorithm);
 		when(datasetController.findById("2")).thenReturn(dataset);
 
-		NewRunCommand cmd = new NewRunCommand(algorithmController, datasetController, runController);
+		NewRunCommand cmd = new NewRunCommand();
+		cmd.parent = mockApp;
 		new CommandLine(cmd).execute("--algorithm-id=1", "--dataset-id=2");
 
 		InOrder inOrder = inOrder(runController);

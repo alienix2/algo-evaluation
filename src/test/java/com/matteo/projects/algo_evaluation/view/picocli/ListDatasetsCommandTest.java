@@ -17,7 +17,7 @@ public class ListDatasetsCommandTest {
 	private DatasetController datasetController;
 	
 	@Mock
-    AlgorithmPicocliApp mockApp;
+    private AlgorithmPicocliApp mockApp;
 
 	private AutoCloseable closeable;
 

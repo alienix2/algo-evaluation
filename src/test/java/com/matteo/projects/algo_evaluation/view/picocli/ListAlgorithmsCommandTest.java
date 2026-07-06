@@ -17,7 +17,7 @@ public class ListAlgorithmsCommandTest {
     private AlgorithmController algorithmController;
     
     @Mock
-    AlgorithmPicocliApp mockApp;
+    private AlgorithmPicocliApp mockApp;
 
     private AutoCloseable closeable;
 
