@@ -13,25 +13,25 @@ import com.matteo.projects.algo_evaluation.controller.DatasetController;
 public class ListDatasetsCommandTest {
 
 	@Mock
-    private DatasetController datasetController;
+	private DatasetController datasetController;
 
-    private AutoCloseable closeable;
+	private AutoCloseable closeable;
 
-    @Before
-    public void setup() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
+	@Before
+	public void setup() {
+		closeable = MockitoAnnotations.openMocks(this);
+	}
 
-    @After
-    public void releaseMocks() throws Exception {
-        closeable.close();
-    }
+	@After
+	public void releaseMocks() throws Exception {
+		closeable.close();
+	}
 
-    @Test
-    public void testCallShowsAllAlgorithms() {
-    	ListDatasetsCommand cmd = new ListDatasetsCommand(datasetController);
-        cmd.call();
-        verify(datasetController).allDatasets();
-    }
+	@Test
+	public void testCallShowsAllDatasets() {
+		ListDatasetsCommand cmd = new ListDatasetsCommand(datasetController);
+		cmd.call();
+		verify(datasetController).allDatasets();
+	}
 
 }

@@ -13,25 +13,25 @@ import com.matteo.projects.algo_evaluation.controller.RunController;
 public class ListRunsCommandTest {
 
 	@Mock
-    private RunController runController;
+	private RunController runController;
 
-    private AutoCloseable closeable;
+	private AutoCloseable closeable;
 
-    @Before
-    public void setup() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
+	@Before
+	public void setup() {
+		closeable = MockitoAnnotations.openMocks(this);
+	}
 
-    @After
-    public void releaseMocks() throws Exception {
-        closeable.close();
-    }
+	@After
+	public void releaseMocks() throws Exception {
+		closeable.close();
+	}
 
-    @Test
-    public void testCallShowsAllAlgorithms() {
-    	ListRunsCommand cmd = new ListRunsCommand(runController);
-        cmd.call();
-        verify(runController).allRuns();
-    }
+	@Test
+	public void testCallShowsAllRuns() {
+		ListRunsCommand cmd = new ListRunsCommand(runController);
+		cmd.call();
+		verify(runController).allRuns();
+	}
 
 }
