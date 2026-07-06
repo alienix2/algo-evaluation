@@ -31,8 +31,6 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 	@Spec
 	CommandSpec spec;
 
-	private AlgorithmPicocliView algorithmPicocliView;
-
 	RunController getRunController() {
 		return runController;
 	}
@@ -50,7 +48,7 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 
 	@Override
 	public Void call() {
-		algorithmPicocliView = new AlgorithmPicocliView(spec.commandLine().getOut());
+		AlgorithmPicocliView algorithmPicocliView = new AlgorithmPicocliView(spec.commandLine().getOut());
 
 		SortingAlgorithmRegistry registry = new SortingAlgorithmRegistry();
 		registry.register("BubbleSort", new BubbleSort());
