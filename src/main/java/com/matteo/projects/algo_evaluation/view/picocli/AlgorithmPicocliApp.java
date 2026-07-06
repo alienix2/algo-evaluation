@@ -9,9 +9,6 @@ import com.matteo.projects.algo_evaluation.algorithm.SortingAlgorithmRegistry;
 import com.matteo.projects.algo_evaluation.controller.AlgorithmController;
 import com.matteo.projects.algo_evaluation.controller.DatasetController;
 import com.matteo.projects.algo_evaluation.controller.RunController;
-import com.matteo.projects.algo_evaluation.repository.AlgorithmRepository;
-import com.matteo.projects.algo_evaluation.repository.DatasetRepository;
-import com.matteo.projects.algo_evaluation.repository.RunRepository;
 import com.matteo.projects.algo_evaluation.repository.mongo.AlgorithmMongoRepository;
 import com.matteo.projects.algo_evaluation.repository.mongo.DatasetMongoRepository;
 import com.matteo.projects.algo_evaluation.repository.mongo.RunMongoRepository;
@@ -51,8 +48,6 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 	@Mixin
 	MongoOptions mongoOptions;
 
-	MongoClient mongoClient;
-
 	@Override
 	public Void call() {
 		algorithmPicocliView = new AlgorithmPicocliView(spec.commandLine().getOut());
@@ -62,9 +57,9 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 		registry.register("SelectionSort", new SelectionSort());
 
 		MongoClient mongoClient = new MongoClient(mongoOptions.mongoHost, mongoOptions.mongoPort);
-		AlgorithmRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, mongoOptions.dbName);
-		DatasetRepository datasetRepository = new DatasetMongoRepository(mongoClient, mongoOptions.dbName);
-		RunRepository runRepository = new RunMongoRepository(mongoClient, mongoOptions.dbName);
+		AlgorithmMongoRepository algorithmRepository = new AlgorithmMongoRepository(mongoClient, mongoOptions.dbName);
+		DatasetMongoRepository datasetRepository = new DatasetMongoRepository(mongoClient, mongoOptions.dbName);
+		RunMongoRepository runRepository = new RunMongoRepository(mongoClient, mongoOptions.dbName);
 
 		runController = new RunController(algorithmPicocliView, runRepository, algorithmRepository, datasetRepository,
 				registry, Clock.systemDefaultZone());
