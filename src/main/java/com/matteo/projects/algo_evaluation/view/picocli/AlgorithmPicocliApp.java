@@ -1,7 +1,6 @@
 package com.matteo.projects.algo_evaluation.view.picocli;
 
 import java.time.Clock;
-import java.util.concurrent.Callable;
 
 import com.matteo.projects.algo_evaluation.algorithm.BubbleSort;
 import com.matteo.projects.algo_evaluation.algorithm.SelectionSort;
@@ -18,18 +17,23 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.ParseResult;
+import picocli.CommandLine.ScopeType;
 import picocli.CommandLine.Spec;
 
-@Command(name = "algo-evaluation", mixinStandardHelpOptions = true, subcommands = { ListAlgorithmsCommand.class,
-		ListDatasetsCommand.class, ListRunsCommand.class, NewRunCommand.class })
-public class AlgorithmPicocliApp implements Callable<Void> {
+@Command(name = "algo-evaluation", version = "0.0.1-SNAPSHOT", mixinStandardHelpOptions = true, scope = ScopeType.INHERIT, subcommands = {
+		ListAlgorithmsCommand.class, ListDatasetsCommand.class, ListRunsCommand.class, NewRunCommand.class })
+public class AlgorithmPicocliApp {
 
 	private RunController runController;
 	private AlgorithmController algorithmController;
 	private DatasetController datasetController;
-	
+
 	@Spec
 	CommandSpec spec;
+
+	@Mixin
+	MongoOptions mongoOptions;
 
 	RunController getRunController() {
 		return runController;
@@ -43,11 +47,23 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 		return algorithmController;
 	}
 
-	@Mixin
-	MongoOptions mongoOptions;
+	private int executionStrategy(ParseResult parseResult) {
+		if (isHelpRequested(parseResult)) {
+			return new CommandLine.RunLast().execute(parseResult);
+		}
+		init();
+		return new CommandLine.RunLast().execute(parseResult);
+	}
 
-	@Override
-	public Void call() {
+	private boolean isHelpRequested(ParseResult parseResult) {
+		if (parseResult.commandSpec().commandLine().isUsageHelpRequested()
+				|| parseResult.commandSpec().commandLine().isVersionHelpRequested()) {
+			return true;
+		}
+		return parseResult.hasSubcommand() && isHelpRequested(parseResult.subcommand());
+	}
+
+	private void init() {
 		AlgorithmPicocliView algorithmPicocliView = new AlgorithmPicocliView(spec.commandLine().getOut());
 
 		SortingAlgorithmRegistry registry = new SortingAlgorithmRegistry();
@@ -63,11 +79,10 @@ public class AlgorithmPicocliApp implements Callable<Void> {
 				registry, Clock.systemDefaultZone());
 		algorithmController = new AlgorithmController(algorithmPicocliView, algorithmRepository);
 		datasetController = new DatasetController(algorithmPicocliView, datasetRepository);
-
-		return null;
 	}
 
 	public static void main(String[] args) {
-		new CommandLine(new AlgorithmPicocliApp()).setExecutionStrategy(new CommandLine.RunAll()).execute(args);
+		AlgorithmPicocliApp app = new AlgorithmPicocliApp();
+		new CommandLine(app).setExecutionStrategy(app::executionStrategy).execute(args);
 	}
 }
