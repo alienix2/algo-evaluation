@@ -1,5 +1,6 @@
 package com.matteo.projects.algo_evaluation.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,7 +52,7 @@ public class DatasetControllerTest {
 	public void testFindById() {
 		Dataset dataset = new Dataset("1", "Dataset1", Arrays.asList(1, 2, 3));
 		when(datasetRepository.findById("1")).thenReturn(dataset);
-		assert(datasetController.findById("1").equals(dataset));
+		assertThat(datasetController.findById("1")).isEqualTo(dataset);
 	}
 
 }
