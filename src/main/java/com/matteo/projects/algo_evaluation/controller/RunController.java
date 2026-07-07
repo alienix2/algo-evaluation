@@ -63,7 +63,7 @@ public class RunController {
 	public void newRun(String algorithmId, String datasetId) {
 		Algorithm algorithm = algorithmRepository.findById(algorithmId);
 		if (algorithm == null) {
-			runView.showAlgorithmError("Algorithm not found in DB: " + datasetId);
+			runView.showAlgorithmError("Algorithm not found in DB: " + algorithmId);
 			return;
 		}
 		Dataset dataset = datasetRepository.findById(datasetId);
