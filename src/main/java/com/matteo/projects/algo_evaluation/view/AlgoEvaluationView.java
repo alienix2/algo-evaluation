@@ -16,6 +16,5 @@ public interface AlgoEvaluationView {
 	
 	void showAllRuns(List<Run> asList);
 	void runAdded(Run run);
-	void showRunError(String string, Run existing);
 
 }

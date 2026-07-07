@@ -92,13 +92,6 @@ public class RunMongoControllerTestcontainersIT {
 	}
 
 	@Test
-	public void testNewRun() {
-		Run run = new Run("1", "1", "1", 1);
-		runController.newRun(run);
-		verify(runView).runAdded(run);
-	}
-
-	@Test
 	public void testCreateNewRun() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
 		Dataset dataset = new Dataset("2", "dataset2", asList(3, 1, 2));

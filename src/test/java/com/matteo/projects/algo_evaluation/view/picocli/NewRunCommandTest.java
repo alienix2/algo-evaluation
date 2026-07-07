@@ -11,18 +11,12 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.matteo.projects.algo_evaluation.controller.AlgorithmController;
-import com.matteo.projects.algo_evaluation.controller.DatasetController;
 import com.matteo.projects.algo_evaluation.controller.RunController;
 
 import picocli.CommandLine;
 
 public class NewRunCommandTest {
 
-	@Mock
-	private AlgorithmController algorithmController;
-	@Mock
-	private DatasetController datasetController;
 	@Mock
 	private RunController runController;
 	@Mock
@@ -33,8 +27,6 @@ public class NewRunCommandTest {
 	@Before
 	public void setup() {
 		closeable = MockitoAnnotations.openMocks(this);
-		when(mockApp.getAlgorithmController()).thenReturn(algorithmController);
-		when(mockApp.getDatasetController()).thenReturn(datasetController);
 		when(mockApp.getRunController()).thenReturn(runController);
 	}
 

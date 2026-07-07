@@ -52,9 +52,4 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 		out.println(ERROR_PREFIX + message);
 	}
 
-	@Override
-	public void showRunError(String message, Run existing) {
-		out.println(ERROR_PREFIX + message);
-	}
-
 }

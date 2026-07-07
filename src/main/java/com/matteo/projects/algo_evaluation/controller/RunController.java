@@ -37,17 +37,6 @@ public class RunController {
 		runView.showAllRuns(runRepository.findAll());
 	}
 
-	public void newRun(Run run) {
-		Run existing = runRepository.findById(run.getId());
-		if (existing != null) {
-			runView.showRunError("Already existing run with id " + run.getId(), existing);
-			return;
-		}
-
-		runRepository.save(run);
-		runView.runAdded(run);
-	}
-
 	public void newRun(Algorithm algorithm, Dataset dataset) {
 		if (algorithmRepository.findById(algorithm.getId()) == null) {
 			runView.showAlgorithmError("Algorithm not found in DB: " + algorithm.getName());
