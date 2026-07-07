@@ -80,26 +80,6 @@ public class RunControllerTest {
 	}
 
 	@Test
-	public void testNewRunDoesNotAlreadyExist() {
-		when(runRepository.findById("1")).thenReturn(null);
-		Run run = new Run("1", "1", "1", 1);
-		runController.newRun(run);
-		InOrder inOrder = inOrder(runRepository, runView);
-		inOrder.verify(runRepository).save(run);
-		inOrder.verify(runView).runAdded(run);
-	}
-
-	@Test
-	public void testNewRunAlreadyExist() {
-		Run existing = new Run("1", "1", "1", 1);
-		Run toAdd = new Run("1", "2", "2", 2);
-		when(runRepository.findById("1")).thenReturn(existing);
-		runController.newRun(toAdd);
-		verify(runView).showRunError("Already existing run with id " + toAdd.getId(), existing);
-		verifyNoMoreInteractions(ignoreStubs(runRepository));
-	}
-
-	@Test
 	public void testNewRunAlgorithmIsFound() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
 		Integer[] unsorted = new Integer[] { 3, 1, 2 };

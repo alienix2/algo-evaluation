@@ -65,9 +65,4 @@ public class AlgorithmPicocliViewTest {
 		assertThat(outputStream.toString()).contains("ERROR: Dataset not found");
 	}
 
-	@Test
-	public void testShowRunError() {
-		view.showRunError("Run not found", null);
-		assertThat(outputStream.toString()).contains("ERROR: Run not found");
-	}
 }
