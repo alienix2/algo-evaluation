@@ -167,12 +167,12 @@ public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 		errorLabel.setText(" ");
 	}
 
-	public void showAlgorithmError(String string, Algorithm algorithm) {
-		errorLabel.setText(string + " for algorithm: " + algorithm.getName());
+	public void showAlgorithmError(String string) {
+		errorLabel.setText(string);
 	}
 
-	public void showDatasetError(String string, Dataset dataset) {
-		errorLabel.setText(string + " for dataset: " + dataset.getName());
+	public void showDatasetError(String string) {
+		errorLabel.setText(string);
 	}
 
 	public void showRunError(String string, Run run) {

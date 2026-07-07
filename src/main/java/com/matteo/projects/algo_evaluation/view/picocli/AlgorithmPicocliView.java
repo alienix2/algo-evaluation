@@ -43,12 +43,12 @@ public class AlgorithmPicocliView implements AlgoEvaluationView {
 	}
 
 	@Override
-	public void showAlgorithmError(String message, Algorithm existing) {
+	public void showAlgorithmError(String message) {
 		out.println(ERROR_PREFIX + message);
 	}
 
 	@Override
-	public void showDatasetError(String message, Dataset existing) {
+	public void showDatasetError(String message) {
 		out.println(ERROR_PREFIX + message);
 	}
 

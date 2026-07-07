@@ -120,7 +120,7 @@ public class RunMongoControllerTestcontainersIT {
 
 	    runController.newRun(algorithm, dataset);
 
-	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName());
 	}
 	
 	@Test
@@ -131,7 +131,7 @@ public class RunMongoControllerTestcontainersIT {
 
 	    runController.newRun(algorithm, dataset);
 
-	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName());
 	}
 
 }

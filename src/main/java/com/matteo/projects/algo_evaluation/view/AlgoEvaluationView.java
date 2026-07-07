@@ -9,10 +9,10 @@ import com.matteo.projects.algo_evaluation.model.Run;
 public interface AlgoEvaluationView {
 
 	void showAllAlgorithms(List<Algorithm> asList);
-	void showAlgorithmError(String string, Algorithm existing);
+	void showAlgorithmError(String message);
 	
 	void showAllDatasets(List<Dataset> asList);
-	void showDatasetError(String string, Dataset existing);
+	void showDatasetError(String message);
 	
 	void showAllRuns(List<Run> asList);
 	void runAdded(Run run);

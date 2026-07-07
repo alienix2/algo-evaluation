@@ -133,7 +133,7 @@ public class RunControllerTest {
 
 		runController.newRun(algorithm, dataset);
 
-		verify(runView).showAlgorithmError("Algorithm not found: Unknown", algorithm);
+		verify(runView).showAlgorithmError("Algorithm not found: Unknown");
 		verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
 	
@@ -145,7 +145,7 @@ public class RunControllerTest {
 
 	    runController.newRun(algorithm, dataset);
 
-	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+	    verify(runView).showAlgorithmError("Algorithm not found in DB: " + algorithm.getName());
 	    verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
 	
@@ -158,7 +158,7 @@ public class RunControllerTest {
 
 	    runController.newRun(algorithm, dataset);
 
-	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+	    verify(runView).showDatasetError("Dataset not found in DB: " + dataset.getName());
 	    verifyNoMoreInteractions(ignoreStubs(runRepository));
 	}
 }

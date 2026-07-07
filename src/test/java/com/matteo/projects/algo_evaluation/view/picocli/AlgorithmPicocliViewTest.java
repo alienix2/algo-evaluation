@@ -55,13 +55,13 @@ public class AlgorithmPicocliViewTest {
 
 	@Test
 	public void testShowAlgorithmError() {
-		view.showAlgorithmError("Algorithm not found", null);
+		view.showAlgorithmError("Algorithm not found");
 		assertThat(outputStream.toString()).contains("ERROR: Algorithm not found");
 	}
 
 	@Test
 	public void testShowDatasetError() {
-		view.showDatasetError("Dataset not found", null);
+		view.showDatasetError("Dataset not found");
 		assertThat(outputStream.toString()).contains("ERROR: Dataset not found");
 	}
 
