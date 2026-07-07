@@ -185,7 +185,7 @@ public class RunControllerTest {
 	}
 	
 	@Test
-	public void TestNewRunWithIDAlgorithmIsNotFound() {
+	public void testNewRunWithIDAlgorithmIsNotFound() {
 		Algorithm algorithm = new Algorithm("1", "Unknown");
 		Dataset dataset = new Dataset("2", "Dataset", Arrays.asList(1, 2, 3));
 		when(algorithmRepository.findById("1")).thenReturn(algorithm);
@@ -199,7 +199,7 @@ public class RunControllerTest {
 	}
 
 	@Test
-	public void TestNewRunWithIDShowsAlgorithmErrorAlgorithmNotInDatabase() {
+	public void testNewRunWithIDShowsAlgorithmErrorAlgorithmNotInDatabase() {
 		when(algorithmRepository.findById("1")).thenReturn(null);
 		Dataset dataset = new Dataset("2", "dataset", Arrays.asList(1, 2, 3));
 		when(datasetRepository.findById("2")).thenReturn(dataset);
@@ -211,7 +211,7 @@ public class RunControllerTest {
 	}
 
 	@Test
-	public void TestNewRunWithIDShowsDatasetErrorDatasetNotInDatabase() {
+	public void testNewRunWithIDShowsDatasetErrorDatasetNotInDatabase() {
 		Algorithm algorithm = new Algorithm("1", "BubbleSort");
 		when(algorithmRepository.findById("1")).thenReturn(algorithm);
 		when(datasetRepository.findById("2")).thenReturn(null);

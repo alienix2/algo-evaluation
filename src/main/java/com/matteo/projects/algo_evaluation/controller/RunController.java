@@ -60,15 +60,15 @@ public class RunController {
 		persistRun(algorithm, dataset);
 	}
 
-	public void newRun(String string, String string2) {
-		Algorithm algorithm = algorithmRepository.findById(string);
+	public void newRun(String algorithmId, String datasetId) {
+		Algorithm algorithm = algorithmRepository.findById(algorithmId);
 		if (algorithm == null) {
-			runView.showAlgorithmError("Algorithm not found in DB: " + string);
+			runView.showAlgorithmError("Algorithm not found in DB: " + datasetId);
 			return;
 		}
-		Dataset dataset = datasetRepository.findById(string2);
+		Dataset dataset = datasetRepository.findById(datasetId);
 		if (dataset == null) {
-			runView.showDatasetError("Dataset not found in DB: " + string2);
+			runView.showDatasetError("Dataset not found in DB: " + datasetId);
 			return;
 		}
 		persistRun(algorithm, dataset);
