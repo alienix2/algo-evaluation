@@ -140,16 +140,15 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Test
 	@GUITest
 	public void testShowAlgorithmErrorShowsError() {
-		Algorithm algorithm = new Algorithm("1", "Unknown");
-		GuiActionRunner.execute(() -> algorithmSwingView.showAlgorithmError("Algorithm not found: Unknown", algorithm));
-		window.label("errorLabel").requireText("Algorithm not found: Unknown for algorithm: Unknown");
+		GuiActionRunner.execute(() -> algorithmSwingView.showAlgorithmError("Algorithm not found: Unknown"));
+		window.label("errorLabel").requireText("Algorithm not found: Unknown");
 	}
 
 	@Test
 	@GUITest
 	public void testRunAddedClearsErrorLabel() {
 		GuiActionRunner.execute(() -> {
-			algorithmSwingView.showAlgorithmError("error", new Algorithm("1", "test"));
+			algorithmSwingView.showAlgorithmError("error");
 			algorithmSwingView.runAdded(new Run("1", "1", "1", 1));
 		});
 		window.label("errorLabel").requireText(" ");
@@ -158,9 +157,8 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Test
 	@GUITest
 	public void testShowDatasetErrorShowsError() {
-		Dataset dataset = new Dataset("1", "Unknown", Arrays.asList(1, 2, 3));
-		GuiActionRunner.execute(() -> algorithmSwingView.showDatasetError("Dataset not found: Unknown", dataset));
-		window.label("errorLabel").requireText("Dataset not found: Unknown for dataset: Unknown");
+		GuiActionRunner.execute(() -> algorithmSwingView.showDatasetError("Dataset not found: Unknown"));
+		window.label("errorLabel").requireText("Dataset not found: Unknown");
 	}
 
 	@Test

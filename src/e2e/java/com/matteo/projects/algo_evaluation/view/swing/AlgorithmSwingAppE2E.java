@@ -78,7 +78,7 @@ public class AlgorithmSwingAppE2E extends AssertJSwingJUnitTestCase {
 		window.list("algorithmList").selectItem(0);
 		window.list("datasetList").selectItem(0);
 		window.button(JButtonMatcher.withText("Run")).click();
-		assertThat(window.label("errorLabel").text()).isEqualTo("Algorithm not found in DB: BubbleSort for algorithm: BubbleSort");
+		assertThat(window.label("errorLabel").text()).isEqualTo("Algorithm not found in DB: BubbleSort");
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class AlgorithmSwingAppE2E extends AssertJSwingJUnitTestCase {
 		window.list("algorithmList").selectItem(0);
 		window.list("datasetList").selectItem(0);
 		window.button(JButtonMatcher.withText("Run")).click();
-		assertThat(window.label("errorLabel").text()).isEqualTo("Dataset not found in DB: Dataset1 for dataset: Dataset1");
+		assertThat(window.label("errorLabel").text()).isEqualTo("Dataset not found in DB: Dataset1");
 	}
 
 	private void addTestAlgorithm(String id, String name) {

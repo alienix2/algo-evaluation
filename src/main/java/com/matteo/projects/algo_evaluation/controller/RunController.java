@@ -50,16 +50,34 @@ public class RunController {
 
 	public void newRun(Algorithm algorithm, Dataset dataset) {
 		if (algorithmRepository.findById(algorithm.getId()) == null) {
-			runView.showAlgorithmError("Algorithm not found in DB: " + algorithm.getName(), algorithm);
+			runView.showAlgorithmError("Algorithm not found in DB: " + algorithm.getName());
 			return;
 		}
 		if (datasetRepository.findById(dataset.getId()) == null) {
-			runView.showDatasetError("Dataset not found in DB: " + dataset.getName(), dataset);
+			runView.showDatasetError("Dataset not found in DB: " + dataset.getName());
 			return;
 		}
+		persistRun(algorithm, dataset);
+	}
+
+	public void newRun(String algorithmId, String datasetId) {
+		Algorithm algorithm = algorithmRepository.findById(algorithmId);
+		if (algorithm == null) {
+			runView.showAlgorithmError("Algorithm not found in DB: " + algorithmId);
+			return;
+		}
+		Dataset dataset = datasetRepository.findById(datasetId);
+		if (dataset == null) {
+			runView.showDatasetError("Dataset not found in DB: " + datasetId);
+			return;
+		}
+		persistRun(algorithm, dataset);
+	}
+	
+	private void persistRun(Algorithm algorithm, Dataset dataset) {
 		SortingAlgorithm sortingAlgorithm = registry.get(algorithm.getName());
 		if (sortingAlgorithm == null) {
-			runView.showAlgorithmError("Algorithm not found: " + algorithm.getName(), algorithm);
+			runView.showAlgorithmError("Algorithm not found: " + algorithm.getName());
 			return;
 		}
 		long start = clock.millis();
