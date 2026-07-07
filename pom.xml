@@ -40,7 +40,7 @@
 			**/AlgorithmSwingView.java</sonar.issue.ignore.multicriteria.e11.resourceKey>
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>
-			**/AlgorithmSwingViewTest.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
+			**/AlgorithmSwingView*.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
 		<sonar.issue.ignore.multicriteria.e13.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e13.ruleKey>
 		<sonar.issue.ignore.multicriteria.e13.resourceKey>**/*E2E.java</sonar.issue.ignore.multicriteria.e13.resourceKey>
 	</properties>
