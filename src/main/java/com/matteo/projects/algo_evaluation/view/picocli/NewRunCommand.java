@@ -2,9 +2,6 @@ package com.matteo.projects.algo_evaluation.view.picocli;
 
 import java.util.concurrent.Callable;
 
-import com.matteo.projects.algo_evaluation.model.Algorithm;
-import com.matteo.projects.algo_evaluation.model.Dataset;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParentCommand;
@@ -23,9 +20,7 @@ public class NewRunCommand implements Callable<Void>{
 	
 	@Override
     public Void call() {
-        Algorithm algorithm = parent.getAlgorithmController().findById(algorithmId);
-        Dataset dataset = parent.getDatasetController().findById(datasetId);
-        parent.getRunController().newRun(algorithm, dataset);
+        parent.getRunController().newRun(algorithmId, datasetId);
         parent.getRunController().allRuns();
         return null;
     }

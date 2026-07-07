@@ -58,7 +58,7 @@ public class NewRunCommandTest {
 		cmd.parent = mockApp;
 		new CommandLine(cmd).execute("--algorithm-id=1", "--dataset-id=2");
 
-		verify(runController).newRun(algorithm, dataset);
+		verify(runController).newRun("1", "2");
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class NewRunCommandTest {
 		new CommandLine(cmd).execute("--algorithm-id=1", "--dataset-id=2");
 
 		InOrder inOrder = inOrder(runController);
-		inOrder.verify(runController).newRun(algorithm, dataset);
+		inOrder.verify(runController).newRun("1", "2");
 		inOrder.verify(runController).allRuns();
 	}
 }
