@@ -57,6 +57,24 @@ public class RunController {
 			runView.showDatasetError("Dataset not found in DB: " + dataset.getName());
 			return;
 		}
+		persistRun(algorithm, dataset);
+	}
+
+	public void newRun(String string, String string2) {
+		Algorithm algorithm = algorithmRepository.findById(string);
+		if (algorithm == null) {
+			runView.showAlgorithmError("Algorithm not found in DB: " + string);
+			return;
+		}
+		Dataset dataset = datasetRepository.findById(string2);
+		if (dataset == null) {
+			runView.showDatasetError("Dataset not found in DB: " + string2);
+			return;
+		}
+		persistRun(algorithm, dataset);
+	}
+	
+	private void persistRun(Algorithm algorithm, Dataset dataset) {
 		SortingAlgorithm sortingAlgorithm = registry.get(algorithm.getName());
 		if (sortingAlgorithm == null) {
 			runView.showAlgorithmError("Algorithm not found: " + algorithm.getName());
