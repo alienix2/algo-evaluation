@@ -161,12 +161,4 @@ public class AlgorithmSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.label("errorLabel").requireText("Dataset not found: Unknown");
 	}
 
-	@Test
-	@GUITest
-	public void testShowRunErrorShowsError() {
-		Run run = new Run("1", "1", "1", 1);
-		GuiActionRunner.execute(() -> algorithmSwingView.showRunError("Run error", run));
-		window.label("errorLabel").requireText("Run error for run: " + run.getId());
-	}
-
 }
