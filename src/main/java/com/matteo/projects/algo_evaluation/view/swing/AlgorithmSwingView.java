@@ -175,8 +175,4 @@ public class AlgorithmSwingView extends JFrame implements AlgoEvaluationView{
 		errorLabel.setText(string);
 	}
 
-	public void showRunError(String string, Run run) {
-		errorLabel.setText(string + " for run: " + run.getId());
-	}
-
 }
